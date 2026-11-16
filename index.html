@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backstage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout : une colonne mobile, en-tête collant (argent, énergie, semaine), onglets en bas. Monde unique, nuit de salle de concert. */
+  color-scheme:dark;
+  --bg:#131019; --surface:#1d1926; --raised:#282234; --line:#352e44;
+  --text:#f4eee4; --muted:#a79fb5;
+  --accent:#ff5a4e; --accent-ink:#1a0d0b;
+  --gold:#f2c14e; --good:#63d6a3; --bad:#ff7d8f; --cool:#7fb2ff;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:15px/1.45 var(--body);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#app{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+h1,h2,h3,.disp{font-family:var(--display);text-wrap:balance;letter-spacing:-.02em}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .small{font-size:13px} .good{color:var(--good)} .bad{color:var(--bad)} .gold{color:var(--gold)}
+
+/* en-tête */
+.top{position:sticky;top:0;z-index:5;background:rgba(19,16,25,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;gap:12px;align-items:center}
+.top .info{flex:1;min-width:0}
+.top .money{font:700 19px var(--display)}
+.ebar{height:6px;background:var(--raised);border-radius:9px;overflow:hidden;margin-top:6px}
+.ebar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:9px;transition:width .3s}
+.next{background:var(--accent);color:var(--accent-ink);font:700 12px var(--display);padding:12px 14px;border-radius:999px;white-space:nowrap}
+.next small{display:block;font:600 11px var(--body);opacity:.8}
+
+main{flex:1;padding:16px 16px 96px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row>.grow{flex:1;min-width:0}
+.sep{border-top:1px solid var(--line);padding-top:10px}
+.btn{background:var(--raised);border:1px solid var(--line);padding:9px 13px;border-radius:11px;font-weight:600;font-size:13.5px}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:none}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--raised);color:var(--muted);white-space:nowrap}
+.pill.or{background:#4a3a12;color:var(--gold)} .pill.pla{background:#2f3340;color:#dfe6f5} .pill.dia{background:#16384a;color:#9fe6ff}
+.pill.hot{background:#4a1c18;color:var(--accent)} .pill.ok{background:#173a2c;color:var(--good)}
+.cost{font-size:12px;color:var(--muted);white-space:nowrap}
+.cost b{color:var(--accent)}
+
+/* héros */
+.hero{background:radial-gradient(120% 140% at 100% 0%,#4a1c2a 0%,var(--surface) 55%);border:1px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.hero h1{font-size:clamp(26px,8vw,38px);font-weight:900;line-height:1;overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:rgba(0,0,0,.25);border-radius:12px;padding:9px 10px}
+.stat b{display:block;font:700 15px var(--display)}
+.stat span{font-size:11.5px;color:var(--muted)}
+
+/* sous-onglets */
+.subs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.subs button{padding:8px 14px;border-radius:99px;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:13px;white-space:nowrap;color:var(--muted)}
+.subs button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+/* compétences */
+.skill{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center}
+.skill .lv{font:700 20px var(--display)}
+.bar{height:5px;background:var(--raised);border-radius:9px;overflow:hidden;margin-top:5px}
+.bar i{display:block;height:100%;background:var(--cool);border-radius:9px}
+
+/* classement */
+.chart{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.chart:last-child{border:0}
+.chart .rk{font:700 15px var(--display);color:var(--muted)}
+.chart.me{background:linear-gradient(90deg,rgba(255,90,78,.16),transparent);margin:0 -14px;padding:8px 14px;border-radius:8px}
+.chart.me .rk{color:var(--accent)}
+.ell{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* nav */
+nav{position:fixed;bottom:0;left:0;right:0;z-index:6;background:rgba(19,16,25,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+nav div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+nav button{padding:8px 0;font-size:11px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px}
+nav button.on{color:var(--accent)}
+nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* modale + toast */
+.veil{position:fixed;inset:0;z-index:20;background:rgba(8,6,12,.72);display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:22px 22px 0 0;width:100%;max-width:560px;max-height:88%;overflow-y:auto;padding:20px 16px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;animation:up .22s ease-out}
+.modal h2{font-size:19px;font-weight:700}
+@keyframes up{from{transform:translateY(24px);opacity:.4}}
+@media (prefers-reduced-motion:reduce){.modal{animation:none}.ebar i{transition:none}}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--muted)}
+input[type=text],select{background:var(--raised);border:1px solid var(--line);border-radius:11px;padding:11px 12px;color:var(--text);width:100%}
+.line{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+#toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);z-index:30;background:var(--text);color:var(--bg);font-weight:600;font-size:13.5px;padding:10px 16px;border-radius:12px;max-width:min(92vw,480px);text-align:center;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}
+
+/* création */
+.intro{padding:28px 16px 40px;display:flex;flex-direction:column;gap:18px}
+.logo{font:900 clamp(40px,13vw,64px)/.9 var(--display);letter-spacing:-.05em}
+.logo em{font-style:normal;color:var(--accent)}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chips button{padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:13.5px}
+.chips button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.pick{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:3px;width:100%}
+.pick.on{border-color:var(--accent);background:#2a1a20}
+.pick b{font-size:15px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:400px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" role="status"></div>
+<script>
+"use strict";
+/* ============ OUTILS ============ */
+const rnd=(a,b)=>a+Math.random()*(b-a), ri=(a,b)=>Math.floor(rnd(a,b+1)), pick=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function fmt(n){n=Math.round(n);const a=Math.abs(n);
+  if(a>=1e9)return (n/1e9).toFixed(2).replace('.',',')+' Md';
+  if(a>=1e6)return (n/1e6).toFixed(a>=1e7?1:2).replace('.',',')+' M';
+  if(a>=1e4)return (n/1e3).toFixed(a>=1e5?0:1).replace('.',',')+' k';
+  return n.toLocaleString('fr-FR');}
+const eur=n=>fmt(n)+' €';
+
+/* ============ DONNÉES ============ */
+const GENRES=['Rap','Pop','R&B','Afro','Électro','Rock','Drill','Variété'];
+const SK={voix:'Voix',ecriture:'Écriture',flow:'Flow & rythme',charisme:'Charisme',viralite:'Viralité',clips:'Réalisation de clips',leadership:'Leadership',marketing:'Marketing',nego:'Négociation'};
+const ART=['voix','ecriture','flow','charisme','viralite','clips'], BIZ=['leadership','marketing','nego'];
+const PROFILES=[
+ {id:'debutant',n:'Débutant',d:'Tu pars de zéro. 300 € en poche, un micro USB et des rêves.',lvl:[12,20],biz:[5,12],money:300,fans:0,fol:40,age:18},
+ {id:'inde',n:'Indé en montée',d:'Quelques sons qui tournent, une petite fanbase, 4 000 € de côté.',lvl:[32,42],biz:[20,30],money:4000,fans:3500,fol:6000,age:22},
+ {id:'confirme',n:'Artiste confirmé',d:'Déjà installé dans le game. 250 k fans et 120 000 € sur le compte.',lvl:[58,68],biz:[40,55],money:120000,fans:250000,fol:400000,age:27},
+];
+const FANTASY=[
+ {id:'nepo',n:'Enfant de star',d:'Papa est une légende. 500 000 €, des contacts partout, mais zéro talent prouvé.',lvl:[10,18],biz:[25,40],money:500000,fans:20000,fol:90000,age:19},
+ {id:'viral',n:'Star des réseaux',d:'600 k abonnés grâce à tes vidéos. Reste à prouver que tu sais faire de la musique.',lvl:[10,16],biz:[20,35],money:8000,fans:15000,fol:600000,age:20,set:{viralite:72,charisme:58}},
+ {id:'prodige',n:'Prodige fauché',d:'Un talent brut hors norme. 0 €, 0 fan, 0 réseau.',lvl:[62,72],biz:[3,8],money:0,fans:0,fol:10,age:17,set:{charisme:25,viralite:15,clips:10}},
+ {id:'dechu',n:'Légende déchue',d:'Tu as tout eu, tout perdu. 400 k fans nostalgiques et 150 000 € de dettes.',lvl:[66,76],biz:[30,45],money:-150000,fans:400000,fol:250000,age:41,health:45},
+];
+const STATUS=[[0,'Inconnu'],[500,'Talent local'],[1e4,'Espoir'],[1e5,'Révélation'],[1e6,"Tête d'affiche"],[1e7,'Superstar'],[5e7,'Icône mondiale']];
+const EFFORT=[{n:'Freestyle express',e:12,b:0},{n:'Titre travaillé',e:22,b:6},{n:'Perfectionniste',e:36,b:12}];
+const STUDIO=[{n:'Chambre + micro USB',c:0,b:0},{n:'Studio de quartier',c:150,b:4},{n:'Studio pro',c:1200,b:8},{n:'Studio de légende',c:15000,b:13}];
+const BEAT=[{n:'Type beat gratuit',c:0,b:0},{n:'Beatmaker local',c:400,b:4},{n:'Producteur confirmé',c:6000,b:8},{n:'Hitmaker international',c:90000,b:13}];
+const CLIP=[{n:'Clip tourné au téléphone',c:0,b:0},{n:'Clip pro',c:8000,b:15},{n:'Superproduction',c:250000,b:30}];
+const ADS=[{c:300,h:.15},{c:3000,h:.3},{c:30000,h:.5},{c:300000,h:.8}];
+const VENUES=[{n:'Scène ouverte',cap:60,min:0,p:0},{n:'Bar concert',cap:150,min:300,p:8},{n:'Petite salle',cap:600,min:3000,p:15},{n:'Salle mythique',cap:2000,min:20000,p:28},{n:'Zénith',cap:8000,min:120000,p:40},{n:'Arena',cap:20000,min:600000,p:55},{n:'Stade',cap:70000,min:3e6,p:75}];
+const TOURS=[{n:'Tournée des bars',v:1,d:6},{n:'Tournée des salles',v:3,d:10},{n:'Tournée des Zéniths',v:4,d:14},{n:'Tournée des Arenas',v:5,d:20},{n:'Tournée mondiale des stades',v:6,d:30}];
+const LABELS=[{n:['Rue 9 Records','Cave 12','Minuit Disques'],min:1500,share:.45,mult:1.5,adv:1.5,songs:6,t:'Label indé'},{n:['Atlas Music','Polygone Musique'],min:40000,share:.30,mult:2.3,adv:2,songs:12,t:'Gros label'},{n:['Empire Sound Group','Monde Universel'],min:400000,share:.25,mult:3.2,adv:3,songs:18,t:'Major'}];
+const JOBS=[{n:'Livreur à vélo',pay:180,e:25},{n:'Vendeur en boutique',pay:320,e:35},{n:'Prof de chant',pay:460,e:30,req:['voix',40]},{n:'Ingé son en studio',pay:650,e:35,req:['flow',50]}];
+const HOMES=[{n:'Chez les parents',c:0,e:0},{n:'Colocation',c:120,e:5},{n:'Studio en ville',c:260,e:10},{n:'Bel appartement',c:650,e:16},{n:'Loft d\'artiste',c:2600,e:26},{n:'Villa sur les hauteurs',c:12000,e:40}];
+const ITEMS=[
+ {id:'f1',cat:'Style',n:'Friperie stylée',c:200,ch:1,im:1},{id:'f2',cat:'Style',n:'Garde-robe streetwear',c:3000,ch:2,im:2},{id:'f3',cat:'Style',n:'Styliste perso',c:40000,ch:3,im:4},{id:'f4',cat:'Style',n:'Haute couture sur mesure',c:400000,ch:4,im:7},
+ {id:'t1',cat:'Transport',n:'Scooter',c:2500,ch:0,im:1},{id:'t2',cat:'Transport',n:'Berline',c:35000,ch:0,im:3},{id:'t3',cat:'Transport',n:'Supercar',c:350000,ch:1,im:6},{id:'t4',cat:'Transport',n:'Jet privé',c:25e6,ch:2,im:12},
+];
+const TEAM=[{id:'manager',n:'Manager',d:'Prend 10 % de tes revenus musicaux. Double les opportunités et gonfle les avances.',w:0,ld:15},{id:'cm',n:'Community manager',d:'Fait grossir tes réseaux tout seul chaque semaine.',w:300,ld:25},{id:'coach',n:'Coach artistique',d:'+1 dans une compétence artistique toutes les 2 semaines.',w:450,ld:35},{id:'presse',n:'Attaché de presse',d:'La hype de tes sons retombe beaucoup moins vite.',w:900,ld:50}];
+const PROPS=[{n:'Place de parking',c:18000,r:25},{n:'Studio étudiant',c:110000,r:140},{n:'T3 centre-ville',c:380000,r:430},{n:'Immeuble de rapport',c:2.4e6,r:3000},{n:'Studio d\'enregistrement',c:6e6,r:9000,note:'+3 de qualité sur tous tes sons'},{n:'Salle de concert',c:2e7,r:32000}];
+const ASSETS=[{id:'idx',n:'Indice Monde',d:'Fonds diversifié, tranquille',dr:.0016,vol:.02},{id:'nova',n:'NovaTech',d:'Action tech, ça bouge',dr:.003,vol:.055},{id:'strm',n:'Streamly',d:'Plateforme de streaming',dr:.0022,vol:.04},{id:'orb',n:'Orbit Coin',d:'Crypto, très risqué',dr:.004,vol:.14},{id:'or',n:'Or',d:'Valeur refuge',dr:.0008,vol:.012}];
+const NETS=[{id:'vibe',n:'Vibe',d:'Vidéos courtes',acts:['post','trend']},{id:'pixa',n:'Pixa',d:'Photos et stories',acts:['post','live']},{id:'echo',n:'Écho',d:'Posts et débats',acts:['post','clash']}];
+const NPCS=['Kaïro','Lune Noire','Santo Vega','Mila Rêve','Dex 9','Ysé','Bando Soleil','Calypso M','Nox','Jade Orion','Rimo','Les Faubourgs','Eden Park','Oumi','Tarek Sol','Vénus Club','Hakim Delta','Sacha Nord','Lou Minuit','Anaïs Volt','Marlo','Sélène','Kobalt','Izia Flore','Tony Braise','Néo Sahara'];
+const W1=['Minuit','Soleil','Nuit','Rêve','Bitume','Vertige','Fumée','Diamant','Feu','Ciel','Mirage','Paname','Lyon','Été','Cœur','Fantôme','Néon','Orage','Vague','Ombre'];
+const W2=['noir','d\'or','éternel','sans toi','en boucle','sous la pluie','à 200','du sud','et moi','perdu','sauvage','brûlant','en bas','de trop','en cavale'];
+const title=()=>Math.random()<.3?pick(W1):pick(W1)+' '+pick(W2);
+const TALENT=['Lina K','Sofiane B','Rose Indigo','Malo','Twins 69','Inès Aura','Yanis Zed','Clara Nuit','Bams','Elio'];
+
+/* ============ ÉTAT ============ */
+let G=null, tab='home', sub={music:'studio',charts:'top',life:'skills'}, draft={genre:'Rap',profile:'debutant'};
+const KEY='backstage-save-v1';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(G))}catch(e){}}
+function load(){try{const s=localStorage.getItem(KEY);return s?JSON.parse(s):null}catch(e){return null}}
+
+function newGame(name,genre,pid){
+  const p=[...PROFILES,...FANTASY].find(x=>x.id===pid);
+  const skills={};
+  ART.forEach(k=>skills[k]=ri(p.lvl[0],p.lvl[1])); BIZ.forEach(k=>skills[k]=ri(p.biz[0],p.biz[1]));
+  Object.assign(skills,p.set||{});
+  G={v:1,name,genre,profile:p.n,age:p.age,t:0,money:p.money,fans:p.fans,energy:100,health:p.health||85,skills,
+    songs:[],albums:[],nid:1,label:null,own:null,social:{vibe:Math.round(p.fol*.5),pixa:Math.round(p.fol*.3),echo:Math.round(p.fol*.2)},
+    offers:[],news:[],job:null,home:pid==='debutant'||pid==='prodige'?0:pid==='inde'?1:pid==='viral'?2:pid==='dechu'?2:3,items:[],team:{},
+    livret:0,props:[],stocks:{},prices:{},hist:{},chart:[],feats:[],tour:null,trend:pick(GENRES),gig:-1,lastRel:0,nextBonus:0,
+    tot:{streams:0,rev:0,no1:0},yr:{streams:0,best:99,albumQ:0},awards:[],last:null,rest:0,prospects:[],fanHist:[p.fans]};
+  ASSETS.forEach(a=>{G.prices[a.id]=100;G.stocks[a.id]={u:0,cost:0};G.hist[a.id]=[100]});
+  for(let i=0;i<45;i++)G.chart.push(npcSong(true));
+  genFeats();
+  G.energy=maxE();
+  news(`${name} entre dans le game. Profil : ${p.n}.`);
+  save();
+}
+function npcSong(old){return{title:title(),artist:pick(NPCS),s:250000*Math.exp(rnd(0,old?3.1:3.4)),age:old?ri(0,20):0}}
+function genFeats(){G.feats=[2e4,3e5,3e6].map(f=>{const fans=Math.round(f*rnd(.6,1.8));return{name:pick(NPCS),fans,price:Math.round(fans*.07)}})}
+function news(txt){G.news.unshift({t:G.t,txt});if(G.news.length>40)G.news.pop()}
+
+/* ============ CALCULS ============ */
+const week=()=>G.t%52+1, year=()=>2026+Math.floor(G.t/52);
+const followers=()=>G.social.vibe+G.social.pixa+G.social.echo;
+const image=()=>G.items.reduce((a,id)=>a+ITEMS.find(i=>i.id===id).im,0)+G.home*2;
+const status=()=>[...STATUS].reverse().find(s=>G.fans>=s[0])[1];
+const hasProp=n=>G.props.some(p=>PROPS[p.i].n===n);
+function maxE(){return Math.max(20,100+HOMES[G.home].e-(G.health<40?20:0)-(G.job!=null?JOBS[G.job].e:0)-(G.tour?30:0))}
+function share(){return G.own?1:G.label?G.label.share:.85}
+function lmult(){return G.own?1.6+G.skills.marketing/200:G.label?G.label.mult:1}
+function netWorth(){let v=G.money+G.livret;ASSETS.forEach(a=>v+=G.stocks[a.id].u*G.prices[a.id]);G.props.forEach(p=>v+=p.val);return v}
+const released=()=>G.songs.filter(s=>s.rel!=null), drawer=()=>G.songs.filter(s=>s.rel==null);
+function cert(total,th){const n=['Or','Platine','Diamant'];let c=null;th.forEach((x,i)=>{if(total>=x)c=n[i]});return c}
+const CS=[15e6,30e6,50e6], CA=[5e4,1e5,5e5];
+const certPill=c=>c?`<span class="pill ${c==='Or'?'or':c==='Platine'?'pla':'dia'}">${c}</span>`:'';
+
+/* ============ ACTIONS DE BASE ============ */
+let toastT;
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2600)}
+function useE(n){if(G.energy<n){toast(`Pas assez d'énergie (il te faut ${n}). Passe à la semaine suivante.`);return false}G.energy-=n;return true}
+function canPay(n){if(G.money<n){toast(`Il te manque ${eur(n-G.money)}.`);return false}return true}
+function gain(k,n=1){G.skills[k]=clamp(G.skills[k]+n,0,100)}
+function addFans(n){G.fans=Math.max(0,Math.round(G.fans+n))}
+
+/* ============ FIN DE SEMAINE ============ */
+function endWeek(){
+  const R={inc:[],exp:[],streams:0,fans0:G.fans,top:null,certs:[]};
+  const inc=(l,v)=>{if(v>=1){R.inc.push([l,v]);G.money+=v}}, exp=(l,v)=>{if(v>=1){R.exp.push([l,v]);G.money-=v}};
+  const sh=share(), lm=lmult();
+  let stream=0, video=0, fansNew=0;
+  // streams
+  const nRel=Math.max(1,released().filter(x=>G.t-x.rel<20).length);
+  released().forEach(s=>{
+    const age=G.t-s.rel, decay=Math.max(.04,Math.pow(.94,age)), q=s.q;
+    if(age<8&&!s.viral&&Math.random()<.005+G.skills.viralite/100*.02+(q>60?.01:0)){s.viral=ri(3,5);s.vm=rnd(4,14);news(`🔥 « ${s.title} » devient viral sur Vibe !`)}
+    let disc=Math.pow(q,2.3)*(.5+G.skills.viralite/100);
+    if(s.viral>0){disc*=s.vm*10;s.viral--}
+    const fanPart=G.fans*3*Math.pow(q/60,2)/Math.sqrt(nRel);
+    let st=(fanPart+disc)*decay*s.hype*lm*(s.genre===G.trend?1.25:1)*(1+(s.fb||0))*rnd(.85,1.15)+(s.ad||0);
+    s.ad=0; st=Math.round(st); s.wk=st; s.total+=st; stream+=st;
+    fansNew+=st*.006*(q/60)*Math.max(.15,decay);
+    if(s.clip){video+=st*.25*(s.clip/60)*.0015}
+    s.hype=1+(s.hype-1)*(G.team.presse?.88:.75);
+    const c=cert(s.total,CS); if(c&&c!==s.cert){s.cert=c;R.certs.push(`« ${s.title} » certifié single de ${c}`)}
+  });
+  R.streams=stream; G.tot.streams+=stream; G.yr.streams+=stream;
+  let mus=stream*.004*sh; if(G.team.manager)mus*=.9;
+  inc('Streaming',mus); inc('Vues des clips',video*sh);
+  // albums
+  G.albums.forEach(a=>{const st=a.ids.reduce((x,id)=>x+(G.songs.find(s=>s.id===id).wk||0),0);a.units+=st/1500;
+    const c=cert(a.units,CA);if(c&&c!==a.cert){a.cert=c;R.certs.push(`L'album « ${a.title} » certifié disque de ${c}`)}});
+  // classement
+  G.chart.forEach(n=>{n.age++;n.s*=n.age<3?rnd(.95,1.2):rnd(.84,.99)});
+  G.chart=G.chart.map(n=>(n.s<200000||Math.random()<.05)?npcSong(false):n);
+  const all=[...G.chart.map(n=>({title:n.title,artist:n.artist,s:n.s})),...released().map(s=>({title:s.title,artist:G.name,s:s.wk,me:s.id}))].sort((a,b)=>b.s-a.s).slice(0,50);
+  G.top=all;
+  released().forEach(s=>{const i=all.findIndex(x=>x.me===s.id);s.pos=i<0?null:i+1;
+    if(s.pos){s.weeks=(s.weeks||0)+1;if(!s.peak||s.pos<s.peak){s.peak=s.pos;if(s.pos===1){G.tot.no1++;news(`👑 « ${s.title} » est numéro 1 du Top 50 !`);addFans(G.fans*.04)}else if(s.pos<=10&&s.weeks<3)news(`« ${s.title} » entre dans le top 10 (n°${s.pos}).`)}
+      if(!R.top||s.pos<R.top[0])R.top=[s.pos,s.title];G.yr.best=Math.min(G.yr.best,s.pos)}});
+  // tournée
+  if(G.tour){const T=TOURS[G.tour.i],V=VENUES[T.v];const att=Math.round(Math.min(V.cap,G.fans*.05*(.6+G.skills.charisme/100))*rnd(.85,1));
+    inc(`${T.n} (date ${G.tour.done+1}/${T.d})`,att*V.p*.65);fansNew+=att*.06*(1+G.skills.charisme/100);G.health-=2;G.tour.done++;
+    if(G.tour.done>=T.d){news(`La ${T.n} est terminée. Standing ovation.`);G.tour=null}}
+  // vie
+  if(G.job!=null)inc(JOBS[G.job].n,JOBS[G.job].pay);
+  exp('Logement',HOMES[G.home].c); exp('Courses et vie quotidienne',60+G.home*40);
+  let sal=0;TEAM.forEach(m=>{if(G.team[m.id])sal+=m.w});exp('Salaires de l\'équipe',sal);
+  if(G.team.cm)NETS.forEach(n=>G.social[n.id]=Math.round(G.social[n.id]*1.008+40));
+  if(G.team.coach&&G.t%2===0)gain(pick(ART));
+  // investissements
+  let rent=0;G.props.forEach(p=>{rent+=PROPS[p.i].r;p.val*=1+rnd(-.001,.0025)});inc('Loyers',rent);
+  if(G.livret>0)G.livret*=1.0006;
+  ASSETS.forEach(a=>{G.prices[a.id]=Math.max(1,G.prices[a.id]*(1+a.dr+a.vol*(Math.random()+Math.random()+Math.random()-1.5)*1.15));G.hist[a.id].push(G.prices[a.id]);if(G.hist[a.id].length>30)G.hist[a.id].shift()});
+  if(G.own){let li=0;G.own.roster.forEach(a=>{a.pot*=rnd(.94,1.08);li+=a.pot*rnd(.6,1.4)});inc(`Label ${G.own.name}`,li)}
+  if(G.money<0){G.health-=3;exp('Agios bancaires',Math.abs(G.money)*.004)}
+  // santé
+  const used=1-G.energy/maxE();
+  G.health+=used>.95?-5:used>.8?-2:3; if(G.home>=3)G.health+=1;
+  G.health=clamp(G.health,0,100);
+  // fans
+  if(G.t-G.lastRel>26&&G.fans>1000){fansNew-=G.fans*.005;if((G.t-G.lastRel)%8===0)news('Tes fans s\'impatientent, ça fait longtemps que tu n\'as rien sorti.')}
+  if(fansNew>0)fansNew=Math.min(fansNew,G.fans*.05+3000)*Math.max(0,1-G.fans/8e7);
+  addFans(fansNew);
+  // temps
+  G.t++;
+  if(G.t%13===0){const old=G.trend;while(G.trend===old)G.trend=pick(GENRES);news(`Nouvelle tendance : le ${G.trend} domine les playlists ce trimestre.`)}
+  if(G.t%4===0)genFeats();
+  if(G.t%12===0)G.prospects=[];
+  if(week()===50)awards(R);
+  if(week()===1){G.age++;G.yr={streams:0,best:99,albumQ:0};news(`Bonne année ${year()} ! Tu as ${G.age} ans.`)}
+  G.offers=G.offers.filter(o=>o.exp>G.t); genOffers();
+  // burn-out
+  let burn=false;
+  if(G.health<=10){burn=true;G.health=45;news('Burn-out. Tu passes une semaine au lit, sans rien pouvoir faire.')}
+  G.energy=burn?0:maxE(); G.gig=-1;
+  R.fans=G.fans-R.fans0; R.burn=burn; G.last=R; G.tot.rev+=R.inc.reduce((a,x)=>a+x[1],0);
+  G.fanHist.push(G.fans);if(G.fanHist.length>52)G.fanHist.shift();
+  save(); showReport(R);
+}
+function awards(R){
+  const win=[];
+  if(!G.awards.some(a=>a.n==='Révélation de l\'année')&&G.fans>=20000&&G.t<160&&Math.random()<.55)win.push('Révélation de l\'année');
+  if(G.yr.best<=10&&Math.random()<(G.yr.best===1?.75:.3))win.push('Chanson de l\'année');
+  if(G.yr.albumQ>=65&&Math.random()<(G.yr.albumQ-55)/40)win.push('Album de l\'année');
+  if(G.yr.streams>15e7&&Math.random()<.5)win.push('Artiste de l\'année');
+  win.forEach(n=>{G.awards.push({n,y:year()});news(`🏆 Tu remportes le trophée « ${n} » ${year()} !`)});
+  if(win.length){addFans(G.fans*.05*win.length);R.certs.push(...win.map(n=>`Trophée : ${n}`))}
+  else news(`Cérémonie des Trophées de la Musique ${year()} : pas de statuette pour toi cette année.`);
+}
+function genOffers(){
+  const mg=G.team.manager?2:1, has=t=>G.offers.some(o=>o.type===t);
+  if(!G.label&&!G.own&&!has('label')&&released().length&&Math.random()<.14*mg){
+    const tier=G.fans>=LABELS[2].min?2:G.fans>=LABELS[1].min?1:G.fans>=LABELS[0].min?0:-1;
+    if(tier>=0){const L=LABELS[tier];G.offers.push({type:'label',tier,name:pick(L.n),share:L.share,mult:L.mult,songs:L.songs,adv:Math.round(Math.max(1500,G.fans*L.adv)*(mg>1?1.15:1)),exp:G.t+4});news('Un label veut te signer. Va voir tes opportunités.')}
+  }
+  const w=week();
+  if(w>=20&&w<=34&&G.fans>=2000&&!has('festival')&&!G.tour&&Math.random()<.22*mg){
+    const big=G.fans>1e6?['Les Vieilles Collines','Solidarock','Main Stage Europe']:G.fans>5e4?['Nuits de Fourvière Off','Printemps Sonore','Rock en Rive']:['Fête de la musique','Festival des Pentes','Tremplin Jeunes Talents'];
+    G.offers.push({type:'festival',name:pick(big),pay:Math.round(300+G.fans*.12*rnd(.7,1.3)),exp:G.t+3})}
+  if(followers()>=15000&&!has('brand')&&Math.random()<.1*mg)
+    G.offers.push({type:'brand',name:pick(['une marque de sneakers','une boisson énergisante','une appli de livraison','une marque de casques audio','une maison de luxe','un jeu mobile']),pay:Math.round(followers()*.03*rnd(.5,1.5)*(1+image()/30)*(1+G.skills.nego/200)),exp:G.t+3});
+  if(G.fans>=5000&&!has('feat')&&Math.random()<.08*mg)
+    G.offers.push({type:'feat',name:pick(NPCS),pay:Math.round(G.fans*.04*rnd(.6,1.4)),exp:G.t+3});
+}
+
+/* ============ ÉVÉNEMENTS ALÉATOIRES ============ */
+const EVENTS=[
+ {q:()=>'Un beatmaker inconnu t\'envoie une prod incroyable. Il la donne gratuitement si tu le crédites.',c:[['Accepter',()=>{G.nextBonus=8;return 'Ton prochain son aura +8 de qualité.'}],['Refuser poliment',()=>'Tu restes sur ta direction artistique.']]},
+ {q:()=>'Une vidéo de toi en soirée, pas très glorieuse, tourne sur Écho.',c:[['S\'excuser publiquement',()=>{G.social.echo=Math.round(G.social.echo*.97);return 'Ça se tasse vite. Tu perds quelques abonnés.'}],['Assumer et en rire',()=>{if(Math.random()<.4+G.skills.charisme/200){const g=Math.round(200+followers()*.05);G.social.echo+=g;addFans(g*.3);return `Ça passe crème, +${fmt(g)} abonnés.`}addFans(-G.fans*.03);return 'Bad buzz. Tu perds 3 % de tes fans.'}],['Ignorer',()=>'Dans une semaine tout le monde aura oublié.']]},
+ {q:()=>'Un programme télé te propose une interview en prime time.',c:[['Y aller',()=>{if(!useE(Math.min(15,G.energy)))return'';gain('charisme');const g=Math.round(50+G.fans*.02);addFans(g);return `Belle séquence. +1 charisme, +${fmt(g)} fans.`}],['Décliner',()=>'Tu préfères laisser parler la musique.']],ok:()=>G.fans>2000},
+ {q:()=>'Extinction de voix en pleine semaine.',c:[['Se reposer',()=>{G.energy=Math.max(0,G.energy-25);G.health=Math.min(100,G.health+5);return '-25 d\'énergie cette semaine, mais ta voix revient.'}],['Forcer quand même',()=>{G.health-=14;return 'Tu tiens le coup, mais ta santé prend cher (-14).'}]]},
+ {q:()=>`Contrôle fiscal. Le fisc te réclame ${eur(Math.max(200,G.money*.06))}.`,c:[['Payer',()=>{G.money-=Math.max(200,G.money*.06);return 'C\'est réglé.'}],['Contester',()=>{if(Math.random()<.2+G.skills.nego/120){gain('nego');return 'Ton dossier était solide. Rien à payer, +1 négociation.'}G.money-=Math.max(200,G.money*.1);return 'Perdu. Tu paies avec une majoration.'}]],ok:()=>G.money>5000},
+ {q:()=>'Un pote d\'enfance te demande de lui prêter 500 €.',c:[['Prêter',()=>{G.money-=500;G.health=Math.min(100,G.health+4);return 'Ça fait du bien d\'aider. Moral en hausse.'}],['Refuser',()=>'Il comprend, enfin presque.']],ok:()=>G.money>1500},
+ {q:()=>'Une grosse playlist éditoriale repère ton dernier son.',c:[['Génial',()=>{const s=released().slice(-1)[0];s.hype=Math.min(3,s.hype+.6);return `« ${s.title} » va tourner fort cette semaine.`}]],ok:()=>released().length>0&&released().slice(-1)[0].q>=45},
+ {q:()=>'Un artiste t\'accuse de plagiat sur un de tes sons.',c:[['Régler à l\'amiable',()=>{const c=Math.round(G.tot.rev*.02+500);G.money-=c;return `Tu paies ${eur(c)} et l'affaire est close.`}],['Aller au procès',()=>{if(Math.random()<.35+G.skills.nego/150){addFans(G.fans*.02);return 'Tu gagnes. Le buzz te rapporte des fans.'}const c=Math.round(G.tot.rev*.05+1500);G.money-=c;return `Perdu. ${eur(c)} de dommages.`}]],ok:()=>G.tot.streams>1e6},
+ {q:()=>'Ta salle de sport te propose un coaching gratuit pour un mois.',c:[['Foncer',()=>{G.health=Math.min(100,G.health+12);gain('charisme');return '+12 santé, +1 charisme.'}]]},
+];
+function maybeEvent(){
+  if(!G||G.t<2||Math.random()>.22)return;
+  const ev=pick(EVENTS.filter(e=>!e.ok||e.ok()));
+  modal(`<h2>Imprévu</h2><p>${esc(ev.q())}</p><div class="row">${ev.c.map((c,i)=>`<button class="btn ${i?'':'pri'}" data-a="evc" data-v="${EVENTS.indexOf(ev)},${i}">${c[0]}</button>`).join('')}</div>`,true);
+}
+
+/* ============ RENDU ============ */
+const app=document.getElementById('app');
+const ICON={home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',music:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',charts:'<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',social:'<path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.2-4.6A8 8 0 1 1 21 12z"/>',life:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'};
+const TABS=[['home','Accueil'],['music','Musique'],['charts','Charts'],['social','Réseaux'],['life','Ma vie']];
+
+function render(){
+  if(!G){app.innerHTML=creation();return}
+  const me=maxE();
+  app.innerHTML=`<header class="top"><div class="info"><div class="money num ${G.money<0?'bad':''}">${eur(G.money)}</div>
+    <div class="ebar" title="Énergie"><i style="width:${clamp(G.energy/me*100,0,100)}%"></i></div>
+    <div class="small muted num" style="margin-top:3px">Énergie ${G.energy}/${me} · Santé ${Math.round(G.health)}</div></div>
+    <button class="next" data-a="end">Semaine suivante<small>S${week()} · ${year()}</small></button></header>
+  <main>${({home:vHome,music:vMusic,charts:vCharts,social:vSocial,life:vLife})[tab]()}</main>
+  <nav><div>${TABS.map(([k,l])=>`<button class="${tab===k?'on':''}" data-a="tab" data-v="${k}"><svg viewBox="0 0 24 24">${ICON[k]}</svg>${l}</button>`).join('')}</div></nav>`;
+}
+const subs=(k,list)=>`<div class="subs">${list.map(([id,l])=>`<button class="${sub[k]===id?'on':''}" data-a="sub" data-v="${k},${id}">${l}</button>`).join('')}</div>`;
+const cost=(e,m)=>`<span class="cost">${e?`<b>⚡${e}</b>`:''}${e&&m?' · ':''}${m?eur(m):''}</span>`;
+
+function creation(){
+  const p=(x)=>`<button class="pick ${draft.profile===x.id?'on':''}" data-a="dprof" data-v="${x.id}"><b>${x.n}</b><span class="small muted">${x.d}</span></button>`;
+  return `<div class="intro"><div><div class="logo">BACK<em>STAGE</em></div><p class="muted" style="margin-top:8px">De ta chambre aux stades. Enregistre, sors tes sons, signe en label, remplis des salles et gère ta vie.</p></div>
+  ${load()?`<button class="btn pri" data-a="cont">Reprendre ma carrière</button>`:''}
+  <label class="f" for="in-name">Nom d'artiste<input type="text" id="in-name" maxlength="22" placeholder="Ton blaze" value="${esc(draft.name||'')}"></label>
+  <div><div class="small muted" style="font-weight:600;margin-bottom:6px">Style musical</div><div class="chips">${GENRES.map(g=>`<button class="${draft.genre===g?'on':''}" data-a="dgenre" data-v="${g}">${g}</button>`).join('')}</div></div>
+  <div style="display:flex;flex-direction:column;gap:8px"><div class="small muted" style="font-weight:600">Point de départ</div>${PROFILES.map(p).join('')}</div>
+  <div style="display:flex;flex-direction:column;gap:8px"><div class="small muted" style="font-weight:600">Scénarios fantasy</div>${FANTASY.map(p).join('')}</div>
+  <button class="btn pri" style="padding:14px;font-size:15px" data-a="start">Lancer ma carrière</button></div>`;
+}
+
+function spark(arr){if(arr.length<2)return'';const mx=Math.max(...arr),mn=Math.min(...arr),w=120,h=30;
+  const pts=arr.map((v,i)=>`${(i/(arr.length-1)*w).toFixed(1)},${(h-2-(mx===mn?.5:(v-mn)/(mx-mn))*(h-4)).toFixed(1)}`).join(' ');
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linejoin="round"/></svg>`}
+
+function vHome(){
+  const wk=released().reduce((a,s)=>a+(s.wk||0),0);
+  const deal=G.own?`Label ${esc(G.own.name)} (à toi)`:G.label?`Signé chez ${esc(G.label.name)}`:'Indépendant';
+  return `<section class="hero"><div><span class="pill hot">${status()}</span> <span class="pill">${esc(G.genre)}</span> <span class="pill">${G.age} ans</span></div>
+   <h1>${esc(G.name)}</h1>
+   <div class="row"><div class="grow small muted">${deal} · Tendance du moment : <b style="color:var(--text)">${G.trend}</b></div>${spark(G.fanHist)}</div>
+   <div class="stats"><div class="stat"><b class="num">${fmt(G.fans)}</b><span>fans</span></div><div class="stat"><b class="num">${fmt(wk)}</b><span>streams / sem.</span></div><div class="stat"><b class="num">${fmt(followers())}</b><span>abonnés</span></div></div></section>
+  ${G.offers.length?`<div class="card"><h3>Opportunités</h3>${G.offers.map(offerRow).join('')}</div>`:''}
+  ${!G.songs.length?`<div class="card"><h3>Par où commencer</h3><p class="small muted">Va dans Musique pour enregistrer ton premier son, sors-le en single, puis fais sa promo dans Réseaux. Quand tu n'as plus d'énergie, passe à la semaine suivante.</p><button class="btn pri" data-a="go" data-v="music,studio">Enregistrer un son</button></div>`:''}
+  ${G.tour?`<div class="card"><h3>En tournée</h3><div class="small muted">${TOURS[G.tour.i].n} : date ${G.tour.done}/${TOURS[G.tour.i].d}. La tournée te prend 30 d'énergie par semaine.</div></div>`:''}
+  <div class="card"><h3>Fil d'actu</h3>${G.news.slice(0,12).map(n=>`<div class="small"><span class="muted num">S${n.t%52+1}</span> ${esc(n.txt)}</div>`).join('')}</div>`;
+}
+function offerRow(o,i){
+  const left=`<span class="pill">${o.exp-G.t} sem.</span>`;
+  if(o.type==='label')return `<div class="sep"><div class="row"><div class="grow"><b>${esc(o.name)}</b> <span class="pill hot">${LABELS[o.tier].t}</span> ${left}<div class="small muted">Avance ${eur(o.adv)} · ${Math.round(o.share*100)} % des revenus pour toi · portée ×${o.mult} · ${o.songs} titres à livrer</div></div></div>
+    <div class="row" style="margin-top:8px"><button class="btn pri" data-a="sign" data-v="${i}">Signer</button><button class="btn" data-a="nego" data-v="${i}" ${o.neg?'disabled':''}>Négocier</button><button class="btn ghost" data-a="decl" data-v="${i}">Refuser</button></div></div>`;
+  const d={festival:[`Festival : ${o.name}`,`Cachet ${eur(o.pay)} et de nouveaux fans`,30],brand:[`Partenariat avec ${o.name}`,`${eur(o.pay)} pour un post sponsorisé`,10],feat:[`${o.name} veut un couplet de toi`,`${eur(o.pay)} et de la visibilité`,15]}[o.type];
+  return `<div class="sep row"><div class="grow"><b>${esc(d[0])}</b> ${left}<div class="small muted">${d[1]}</div></div>${cost(d[2])}<button class="btn pri" data-a="take" data-v="${i}">Accepter</button></div>`;
+}
+
+function vMusic(){
+  let h=subs('music',[['studio','Studio'],['cat','Catalogue'],['label','Label'],['stage','Scène']]);
+  if(sub.music==='studio'){
+    const d=drawer();
+    h+=`<div class="card"><h3>Studio</h3><p class="small muted">La qualité d'un son dépend de ta voix, ton écriture et ton flow, plus le studio, la prod et le temps que tu y passes.</p><button class="btn pri" data-a="recform">Enregistrer un nouveau son</button></div>
+    <div class="card"><h3>Dans le tiroir (${d.length})</h3>${d.length?d.map(s=>`<div class="row sep"><div class="grow"><b>${esc(s.title)}</b>${s.feat?` <span class="muted">feat. ${esc(s.feat)}</span>`:''}<div class="small muted">${s.genre} · note ${s.q}/100</div></div><button class="btn pri" data-a="single" data-v="${s.id}">Sortir en single</button></div>`).join(''):'<p class="small muted">Aucun son en attente de sortie.</p>'}
+    ${G.songs.length>=4?`<div class="sep"><button class="btn" data-a="albform">Monter un EP ou un album</button><div class="small muted" style="margin-top:6px">4 à 7 titres pour un EP, 8 ou plus pour un album. Tu peux y mettre tes singles déjà sortis.</div></div>`:''}</div>`;
+  }
+  if(sub.music==='cat'){
+    const r=released().slice().reverse();
+    h+=G.albums.length?`<div class="card"><h3>Projets</h3>${G.albums.slice().reverse().map(a=>`<div class="row sep"><div class="grow"><b>${esc(a.title)}</b> ${certPill(a.cert)}<div class="small muted">${a.ids.length>=8?'Album':'EP'} · ${a.ids.length} titres · ${fmt(a.units)} ventes équivalentes</div></div></div>`).join('')}</div>`:'';
+    h+=`<div class="card"><h3>Singles et titres sortis (${r.length})</h3>${r.length?r.map(s=>`<div class="sep"><div class="row"><div class="grow"><b>${esc(s.title)}</b>${s.feat?` <span class="muted">feat. ${esc(s.feat)}</span>`:''} ${certPill(s.cert)} ${s.pos?`<span class="pill hot">n°${s.pos}</span>`:''}${s.viral>0?' <span class="pill ok">viral</span>':''}
+      <div class="small muted num">Note ${s.q} · ${fmt(s.total)} streams · ${fmt(s.wk||0)} cette sem.${s.peak?` · pic n°${s.peak}`:''}</div></div></div>
+      <div class="row" style="margin-top:8px"><button class="btn" data-a="promo" data-v="${s.id}">Promo réseaux ${cost(8)}</button>${s.clip?`<span class="pill">Clip ${s.clip}/100</span>`:`<button class="btn" data-a="clipform" data-v="${s.id}">Tourner un clip</button>`}<button class="btn" data-a="adform" data-v="${s.id}">Pub payante</button></div></div>`).join(''):'<p class="small muted">Rien de sorti pour l\'instant.</p>'}</div>`;
+  }
+  if(sub.music==='label'){
+    if(G.own){
+      if(!G.prospects.length)G.prospects=[0,1,2].map(()=>{const pot=Math.round(rnd(800,40000));return{name:pick(TALENT),pot,c:Math.round(pot*rnd(18,35))}});
+      h+=`<div class="card"><h3>${esc(G.own.name)}</h3><p class="small muted">Ton propre label : 100 % des revenus pour toi et une portée boostée par ton marketing.</p>
+      ${G.own.roster.map(a=>`<div class="row sep"><div class="grow"><b>${esc(a.name)}</b><div class="small muted">Rapporte environ ${eur(a.pot)} par semaine</div></div></div>`).join('')}</div>
+      <div class="card"><h3>Talents à signer (${G.own.roster.length}/5)</h3>${G.prospects.map((p,i)=>`<div class="row sep"><div class="grow"><b>${esc(p.name)}</b><div class="small muted">Potentiel estimé ${eur(p.pot)} / sem.</div></div>${cost(0,p.c)}<button class="btn pri" data-a="signtal" data-v="${i}">Signer</button></div>`).join('')}</div>`;
+    }else{
+      h+=`<div class="card"><h3>Ta situation</h3>${G.label?`<p><b>${esc(G.label.name)}</b> <span class="pill hot">${LABELS[G.label.tier].t}</span></p><div class="small muted">${Math.round(G.label.share*100)} % des revenus pour toi · portée ×${G.label.mult} · encore ${G.label.left} titres à livrer</div><button class="btn" data-a="breakform">Racheter mon contrat (${eur(G.label.adv*1.2)})</button>`
+       :`<p><b>Indépendant</b></p><div class="small muted">Tu gardes 85 % de tes revenus, mais sans la force de frappe d'un label. Les offres arrivent dans Accueil quand ta fanbase grandit (à partir de 1 500 fans et un son sorti).</div>`}</div>
+      <div class="card"><h3>Lancer ton propre label</h3><p class="small muted">Il te faut 500 k fans, 1,5 M € et aucun contrat en cours. Tu touches 100 % de tes revenus et tu peux signer d'autres artistes.</p>
+      <label class="f" for="in-label">Nom du label<input type="text" id="in-label" maxlength="24" placeholder="Ex. Onde Records"></label>
+      <button class="btn pri" data-a="ownlabel" ${G.fans>=5e5&&G.money>=1.5e6&&!G.label?'':'disabled'}>Créer le label (1,5 M €)</button></div>`;
+    }
+  }
+  if(sub.music==='stage'){
+    h+=`<div class="card"><h3>Concerts</h3><p class="small muted">Un concert par semaine maximum. Plus tu as de fans et de charisme, plus tu remplis.</p>
+    ${VENUES.map((v,i)=>{const ok=G.fans>=v.min;return `<div class="row sep"><div class="grow"><b>${v.n}</b><div class="small muted num">${fmt(v.cap)} places · ${v.p?`billet ${v.p} €`:'au chapeau'}${ok?'':` · débloqué à ${fmt(v.min)} fans`}</div></div>${cost(25)}<button class="btn pri" data-a="gig" data-v="${i}" ${ok&&!G.tour&&G.gig!==G.t?'':'disabled'}>Jouer</button></div>`}).join('')}</div>
+    <div class="card"><h3>Tournées</h3><p class="small muted">Une date par semaine, automatiquement. Coût de production à payer d'avance, 30 d'énergie bloqués chaque semaine.</p>
+    ${TOURS.map((T,i)=>{const V=VENUES[T.v],ok=G.fans>=V.min*1.5,c=T.d*V.cap*3;return `<div class="row sep"><div class="grow"><b>${T.n}</b><div class="small muted num">${T.d} dates · ${V.n}${ok?'':` · débloquée à ${fmt(V.min*1.5)} fans`}</div></div>${cost(0,c)}<button class="btn pri" data-a="tour" data-v="${i}" ${ok&&!G.tour?'':'disabled'}>Partir</button></div>`}).join('')}</div>`;
+  }
+  return h;
+}
+
+function vCharts(){
+  let h=subs('charts',[['top','Top 50'],['certs','Certifications'],['palm','Palmarès']]);
+  if(sub.charts==='top'){
+    const top=G.top||[...G.chart].sort((a,b)=>b.s-a.s).slice(0,50);
+    h+=`<div class="card"><h3>Top 50 de la semaine</h3>${top.map((x,i)=>`<div class="chart ${x.me?'me':''}"><span class="rk num">${i+1}</span><div style="min-width:0"><div class="ell"><b>${esc(x.title)}</b></div><div class="small muted ell">${esc(x.artist)}</div></div><span class="small num muted">${fmt(x.s)}</span></div>`).join('')}</div>`;
+  }
+  if(sub.charts==='certs'){
+    const cs=released().filter(s=>s.cert), ca=G.albums.filter(a=>a.cert);
+    h+=`<div class="card"><h3>Tes certifications</h3>${cs.length+ca.length?[...ca.map(a=>`<div class="row sep"><div class="grow"><b>${esc(a.title)}</b><div class="small muted">Album · ${fmt(a.units)} ventes</div></div>${certPill(a.cert)}</div>`),...cs.map(s=>`<div class="row sep"><div class="grow"><b>${esc(s.title)}</b><div class="small muted">Single · ${fmt(s.total)} streams</div></div>${certPill(s.cert)}</div>`)].join(''):'<p class="small muted">Pas encore de disque au mur.</p>'}
+    <div class="sep small muted">Singles : Or à 15 M de streams, Platine à 30 M, Diamant à 50 M.<br>Albums : Or à 50 k ventes, Platine à 100 k, Diamant à 500 k (1 500 streams = 1 vente).</div></div>`;
+  }
+  if(sub.charts==='palm'){
+    h+=`<div class="card"><h3>Carrière</h3><div class="line"><span class="muted">Streams cumulés</span><b class="num">${fmt(G.tot.streams)}</b></div><div class="line"><span class="muted">Revenus cumulés</span><b class="num">${eur(G.tot.rev)}</b></div><div class="line"><span class="muted">Numéros 1</span><b class="num">${G.tot.no1}</b></div><div class="line"><span class="muted">Titres sortis</span><b class="num">${released().length}</b></div><div class="line"><span class="muted">Patrimoine</span><b class="num">${eur(netWorth())}</b></div></div>
+    <div class="card"><h3>Trophées de la Musique</h3>${G.awards.length?G.awards.map(a=>`<div class="row"><span class="pill or">${a.y}</span> ${a.n}</div>`).join(''):'<p class="small muted">La cérémonie a lieu chaque année en semaine 50. Classe un son dans le top 10 ou sors un gros album pour être dans la course.</p>'}</div>`;
+  }
+  return h;
+}
+
+const ACTL={post:['Publier un contenu',5],trend:['Tenter un trend',10],live:['Faire un live',12],clash:['Lancer un clash',10]};
+function vSocial(){
+  return `<div class="card"><h3>Tes réseaux</h3><p class="small muted">Tes abonnés se transforment en fans, attirent les marques et donnent de la force à tes promos. Ton image (${image()}) et ton charisme accélèrent tout.</p></div>
+  ${NETS.map(n=>`<div class="card"><div class="row"><div class="grow"><b class="disp" style="font-size:17px">${n.n}</b><div class="small muted">${n.d}</div></div><b class="num disp">${fmt(G.social[n.id])}</b></div>
+   <div class="row">${n.acts.map(a=>`<button class="btn" data-a="soc" data-v="${n.id},${a}">${ACTL[a][0]} ${cost(ACTL[a][1])}</button>`).join('')}</div></div>`).join('')}
+  <div class="card"><h3>Promouvoir un son</h3>${released().length?`<p class="small muted">La promo fait monter la hype d'un titre pour quelques semaines. Va dans Musique, Catalogue, et choisis le son à pousser.</p><button class="btn pri" data-a="go" data-v="music,cat">Ouvrir le catalogue</button>`:'<p class="small muted">Sors d\'abord un son.</p>'}</div>`;
+}
+
+function vLife(){
+  let h=subs('life',[['skills','Compétences'],['style','Lifestyle'],['team','Équipe'],['inv','Investir']]);
+  if(sub.life==='skills'){
+    const row=k=>{const lv=G.skills[k],e=8+Math.floor(lv/6);return `<div class="skill"><span class="lv num">${lv}</span><div><b>${SK[k]}</b><div class="bar"><i style="width:${lv}%"></i></div></div><div class="row" style="gap:6px"><button class="btn" data-a="train" data-v="${k}" ${lv>=100?'disabled':''}>+1 ${cost(e)}</button><button class="btn" data-a="coach" data-v="${k}" ${lv>=98?'disabled':''} title="Cours intensif">+3 ${cost(e,100+lv*lv)}</button></div></div>`};
+    h+=`<div class="card"><h3>Artiste</h3>${ART.map(row).join('')}</div><div class="card"><h3>Business</h3>${BIZ.map(row).join('')}</div>`;
+  }
+  if(sub.life==='style'){
+    h+=`<div class="card"><h3>Santé ${Math.round(G.health)}/100</h3><p class="small muted">Si tu vides ton énergie chaque semaine, ta santé chute. Sous 40 tu perds 20 d'énergie max, à 10 c'est le burn-out.</p><div class="row"><button class="btn" data-a="health" data-v="0">Salle de sport ${cost(10,20)}</button><button class="btn" data-a="health" data-v="1">Week-end off ${cost(30)}</button><button class="btn" data-a="health" data-v="2">Cure de repos ${cost(0,1500)}</button></div></div>
+    <div class="card"><h3>Petit boulot</h3><p class="small muted">Un salaire fixe, mais de l'énergie en moins chaque semaine.</p>${JOBS.map((j,i)=>{const ok=!j.req||G.skills[j.req[0]]>=j.req[1];return `<div class="row sep"><div class="grow"><b>${j.n}</b><div class="small muted">+${j.pay} € / sem. · ⚡${j.e} en moins${j.req?` · ${SK[j.req[0]]} ${j.req[1]} requis`:''}</div></div>${G.job===i?`<button class="btn" data-a="job" data-v="-1">Démissionner</button>`:`<button class="btn pri" data-a="job" data-v="${i}" ${ok?'':'disabled'}>Postuler</button>`}</div>`}).join('')}</div>
+    <div class="card"><h3>Logement</h3>${HOMES.map((x,i)=>`<div class="row sep"><div class="grow"><b>${x.n}</b><div class="small muted">${x.c?eur(x.c)+' / sem.':'Gratuit'} · énergie max +${x.e}</div></div>${G.home===i?'<span class="pill ok">Chez toi</span>':`<button class="btn" data-a="home" data-v="${i}">Emménager</button>`}</div>`).join('')}</div>
+    <div class="card"><h3>Style et transport</h3>${ITEMS.map(x=>`<div class="row sep"><div class="grow"><b>${x.n}</b><div class="small muted">${x.cat} · image +${x.im}${x.ch?` · charisme +${x.ch}`:''}</div></div>${G.items.includes(x.id)?'<span class="pill ok">Acheté</span>':`${cost(0,x.c)}<button class="btn pri" data-a="buy" data-v="${x.id}">Acheter</button>`}</div>`).join('')}</div>`;
+  }
+  if(sub.life==='team'){
+    h+=`<div class="card"><h3>Ton équipe</h3><p class="small muted">Chaque recrue demande un certain niveau de leadership.</p>${TEAM.map(m=>`<div class="row sep"><div class="grow"><b>${m.n}</b><div class="small muted">${m.d}<br>${m.w?eur(m.w)+' / sem.':'Pas de salaire fixe'} · Leadership ${m.ld} requis</div></div>${G.team[m.id]?`<button class="btn" data-a="fire" data-v="${m.id}">Remercier</button>`:`<button class="btn pri" data-a="hire" data-v="${m.id}" ${G.skills.leadership>=m.ld?'':'disabled'}>Recruter</button>`}</div>`).join('')}</div>`;
+  }
+  if(sub.life==='inv'){
+    h+=`<div class="card"><h3>Patrimoine ${eur(netWorth())}</h3><div class="row"><div class="grow"><b>Livret</b><div class="small muted">Sans risque, environ 3 % par an · <span class="num">${eur(G.livret)}</span></div></div></div><div class="row"><button class="btn" data-a="liv" data-v="1000">+1 k</button><button class="btn" data-a="liv" data-v="10000">+10 k</button><button class="btn" data-a="liv" data-v="100000">+100 k</button><button class="btn" data-a="liv" data-v="-1">Tout retirer</button></div></div>
+    <div class="card"><h3>Marchés</h3>${ASSETS.map(a=>{const s=G.stocks[a.id],val=s.u*G.prices[a.id],pl=val-s.cost,hs=G.hist[a.id],ch=hs.length>1?(hs[hs.length-1]/hs[hs.length-2]-1)*100:0;
+      return `<div class="sep"><div class="row"><div class="grow"><b>${a.n}</b> <span class="small num ${ch>=0?'good':'bad'}">${ch>=0?'+':''}${ch.toFixed(1)} %</span><div class="small muted">${a.d} · cours ${G.prices[a.id].toFixed(1)}</div>${s.u?`<div class="small num">Position ${eur(val)} <span class="${pl>=0?'good':'bad'}">(${pl>=0?'+':''}${eur(pl)})</span></div>`:''}</div>${spark(hs)}</div>
+      <div class="row" style="margin-top:8px"><button class="btn" data-a="stk" data-v="${a.id},1000">+1 k</button><button class="btn" data-a="stk" data-v="${a.id},10000">+10 k</button><button class="btn" data-a="stk" data-v="${a.id},100000">+100 k</button><button class="btn" data-a="stk" data-v="${a.id},-1" ${s.u?'':'disabled'}>Vendre</button></div></div>`}).join('')}</div>
+    <div class="card"><h3>Immobilier</h3>${G.props.map((p,i)=>`<div class="row sep"><div class="grow"><b>${PROPS[p.i].n}</b><div class="small muted num">Vaut ${eur(p.val)} · loyer ${eur(PROPS[p.i].r)} / sem.</div></div><button class="btn" data-a="sellp" data-v="${i}">Vendre</button></div>`).join('')}
+    ${PROPS.map((p,i)=>`<div class="row sep"><div class="grow"><b>${p.n}</b><div class="small muted">Loyer ${eur(p.r)} / sem.${p.note?' · '+p.note:''}</div></div>${cost(0,p.c)}<button class="btn pri" data-a="buyp" data-v="${i}">Acheter</button></div>`).join('')}</div>`;
+  }
+  return h+`<button class="btn ghost small" data-a="resetform" style="align-self:center">Recommencer une carrière</button>`;
+}
+
+/* ============ MODALES ============ */
+let after=null;
+function modal(html,lock){closeModal();const v=document.createElement('div');v.className='veil';v.id='veil';if(!lock)v.dataset.a='close';v.innerHTML=`<div class="modal" role="dialog" aria-modal="true">${html}</div>`;document.body.appendChild(v)}
+function closeModal(){const v=document.getElementById('veil');if(v)v.remove()}
+function info(titleTxt,body){modal(`<h2>${titleTxt}</h2><p>${body}</p><button class="btn pri" data-a="close">OK</button>`)}
+function showReport(R){
+  const ti=R.inc.reduce((a,x)=>a+x[1],0), te=R.exp.reduce((a,x)=>a+x[1],0), net=ti-te;
+  after=maybeEvent;
+  modal(`<h2>Bilan de la semaine</h2>
+   ${R.burn?'<p class="bad">Burn-out : tu n\'as pas d\'énergie cette semaine. Repose-toi.</p>':''}
+   <div class="stats"><div class="stat"><b class="num">${fmt(R.streams)}</b><span>streams</span></div><div class="stat"><b class="num ${R.fans<0?'bad':''}">${R.fans>=0?'+':''}${fmt(R.fans)}</b><span>fans</span></div><div class="stat"><b class="num ${net<0?'bad':'good'}">${net>=0?'+':''}${fmt(net)} €</b><span>résultat</span></div></div>
+   ${R.top?`<p>Meilleur classement : <b>n°${R.top[0]}</b> avec « ${esc(R.top[1])} »</p>`:''}
+   ${R.certs.map(c=>`<p class="gold">★ ${esc(c)}</p>`).join('')}
+   <div>${R.inc.map(x=>`<div class="line"><span class="muted">${esc(x[0])}</span><span class="num good">+${eur(x[1])}</span></div>`).join('')}${R.exp.map(x=>`<div class="line"><span class="muted">${esc(x[0])}</span><span class="num bad">-${eur(x[1])}</span></div>`).join('')}</div>
+   <button class="btn pri" data-a="close">Continuer</button>`,true);
+}
+const opts=(arr,f)=>arr.map((x,i)=>`<option value="${i}">${f(x,i)}</option>`).join('');
+
+/* ============ GESTIONNAIRES ============ */
+const A={
+ tab(v){tab=v;window.scrollTo(0,0)}, sub(v){const[k,id]=v.split(',');sub[k]=id}, go(v){const[k,id]=v.split(',');tab=k;sub[k]=id;window.scrollTo(0,0)},
+ close(){closeModal();const f=after;after=null;if(f)f()},
+ dgenre(v){keepName();draft.genre=v}, dprof(v){keepName();draft.profile=v},
+ cont(){G=load()},
+ start(){keepName();if(!draft.name){toast('Choisis un nom d\'artiste.');return}newGame(draft.name,draft.genre,draft.profile);tab='home'},
+ end(){endWeek();render();return true},
+ evc(v){const[e,c]=v.split(',').map(Number);const txt=EVENTS[e].c[c][1]();save();render();info('Résultat',esc(txt||'C\'est noté.'))  ;return true},
+ resetform(){modal(`<h2>Recommencer ?</h2><p>Ta carrière actuelle sera effacée.</p><div class="row"><button class="btn pri" data-a="reset">Oui, tout effacer</button><button class="btn" data-a="close">Annuler</button></div>`);return true},
+ reset(){try{localStorage.removeItem(KEY)}catch(e){}G=null;draft={genre:'Rap',profile:'debutant'};closeModal()},
+
+ /* musique */
+ recform(){
+  modal(`<h2>Nouveau son</h2>
+   <label class="f" for="r-title">Titre<div class="row"><input type="text" id="r-title" maxlength="40" value="${esc(title())}" style="flex:1;width:auto"><button class="btn" data-a="rtitle" type="button">Autre idée</button></div></label>
+   <label class="f" for="r-genre">Style<select id="r-genre">${GENRES.map(g=>`<option ${g===G.genre?'selected':''}>${g}</option>`).join('')}</select></label>
+   <label class="f" for="r-eff">Temps passé<select id="r-eff">${opts(EFFORT,x=>`${x.n} · ⚡${x.e} · +${x.b}`)}</select></label>
+   <label class="f" for="r-stu">Studio<select id="r-stu">${opts(STUDIO,x=>`${x.n} · ${x.c?eur(x.c):'gratuit'} · +${x.b}`)}</select></label>
+   <label class="f" for="r-beat">Prod<select id="r-beat">${opts(BEAT,x=>`${x.n} · ${x.c?eur(x.c):'gratuit'} · +${x.b}`)}</select></label>
+   <label class="f" for="r-feat">Featuring<select id="r-feat"><option value="-1">Solo</option>${opts(G.feats,x=>`${esc(x.name)} · ${fmt(x.fans)} fans · ${eur(x.price*(1-G.skills.nego/250))}`)}</select></label>
+   ${G.nextBonus?`<p class="small good">Bonus prod offerte : +${G.nextBonus} sur ce son.</p>`:''}
+   <div class="row"><button class="btn pri" data-a="record">Enregistrer</button><button class="btn" data-a="close">Annuler</button></div>`);return true},
+ rtitle(){document.getElementById('r-title').value=title();return true},
+ record(){
+  const g=id=>document.getElementById(id), ef=EFFORT[+g('r-eff').value], st=STUDIO[+g('r-stu').value], bt=BEAT[+g('r-beat').value], fi=+g('r-feat').value, ft=fi>=0?G.feats[fi]:null;
+  const t=g('r-title').value.trim()||title(), fc=ft?Math.round(ft.price*(1-G.skills.nego/250)):0, total=st.c+bt.c+fc;
+  if(!canPay(total))return true; if(!useE(ef.e))return true;
+  G.money-=total;
+  const base=G.skills.ecriture*.35+G.skills.voix*.35+G.skills.flow*.3;
+  const q=clamp(Math.round(base*.72+ef.b+st.b+bt.b+rnd(-5,5)+G.nextBonus+(hasProp('Studio d\'enregistrement')?3:0)+(ft?3:0)),1,100);
+  G.nextBonus=0;
+  G.songs.push({id:G.nid++,title:t,genre:g('r-genre').value,q,rel:null,total:0,wk:0,hype:1,feat:ft?ft.name:null,fb:ft?clamp(ft.fans/(G.fans+ft.fans),0,.9):0});
+  const up=pick(['ecriture','voix','flow']);let x='';if(Math.random()<.35&&G.skills[up]<100){gain(up);x=` Tu progresses : +1 en ${SK[up].toLowerCase()}.`}
+  save();render();info(`« ${esc(t)} »`,`Note du studio : <b>${q}/100</b>. ${q>=80?'Un banger.':q>=60?'Du solide.':q>=40?'Correct, sans plus.':'Encore brouillon, continue de bosser tes compétences.'}${x}<br><span class="small muted">Le son est dans ton tiroir. Sors-le en single ou garde-le pour un projet.</span>`);return true},
+ single(v){const s=G.songs.find(x=>x.id==v);release(s,1);news(`Nouveau single : « ${s.title} » est disponible partout.`);toast(`« ${s.title} » est sorti !`)},
+ albform(){
+  modal(`<h2>Nouveau projet</h2><label class="f" for="a-title">Titre du projet<input type="text" id="a-title" maxlength="40" value="${esc(title())}"></label>
+   <div class="small muted">Coche 4 titres minimum (8 pour un album). Les titres déjà sur un projet ne sont pas proposés.</div>
+   ${G.songs.filter(s=>!s.alb).map(s=>`<label class="row" for="a-${s.id}"><input type="checkbox" id="a-${s.id}" value="${s.id}" class="a-song"> <span class="grow">${esc(s.title)} <span class="muted small">note ${s.q}${s.rel!=null?' · déjà sorti':''}</span></span></label>`).join('')}
+   <div class="row"><button class="btn pri" data-a="album">Sortir le projet</button><button class="btn" data-a="close">Annuler</button></div>`);return true},
+ album(){
+  const ids=[...document.querySelectorAll('.a-song:checked')].map(c=>+c.value);
+  if(ids.length<4){toast('Il faut au moins 4 titres.');return true}
+  const t=document.getElementById('a-title').value.trim()||title(), ss=ids.map(id=>G.songs.find(s=>s.id===id)), avg=ss.reduce((a,s)=>a+s.q,0)/ss.length, big=ids.length>=8;
+  ss.forEach(s=>{s.alb=t;if(s.rel==null)release(s,1.25);else s.hype=Math.min(3,s.hype+.25)});
+  const units=G.fans*.03*(avg/60)*rnd(.7,1.3)*(big?1:.5), rev=units*9*share();
+  G.albums.push({title:t,ids,rel:G.t,units,cert:null,q:Math.round(avg)}); G.money+=rev; G.yr.albumQ=Math.max(G.yr.albumQ,big?avg:avg-10);
+  news(`${big?'L\'album':'L\'EP'} « ${t} » est sorti (${ids.length} titres).`);
+  save();render();info(`« ${esc(t)} » est dans les bacs`,`${big?'Album':'EP'} de ${ids.length} titres, note moyenne ${Math.round(avg)}/100.<br>Ventes de la première semaine : <b>${fmt(units)}</b> exemplaires, soit ${eur(rev)} pour toi.`);return true},
+ promo(v){const s=G.songs.find(x=>x.id==v);if(s.pt===G.t){toast('Déjà promu cette semaine.');return}if(!useE(8))return;
+  const h=.1+Math.min(.15,followers()/(G.fans+1000)*.1)+G.skills.marketing/100*.3;s.hype=Math.min(3,s.hype+h);s.pt=G.t;toast(`Hype de « ${s.title} » : +${Math.round(h*100)} %`)},
+ clipform(v){modal(`<h2>Tourner un clip</h2><p class="small muted">Un clip relance la hype du son et rapporte des revenus vidéo. Sa qualité dépend de ta compétence en réalisation.</p>${CLIP.map((c,i)=>`<div class="row sep"><div class="grow"><b>${c.n}</b><div class="small muted">Bonus qualité +${c.b}</div></div>${cost(18,c.c)}<button class="btn pri" data-a="clip" data-v="${v},${i}">Tourner</button></div>`).join('')}<button class="btn" data-a="close">Annuler</button>`);return true},
+ clip(v){const[id,i]=v.split(',').map(Number),s=G.songs.find(x=>x.id===id),c=CLIP[i];if(!canPay(c.c)||!useE(18))return true;G.money-=c.c;
+  s.clip=clamp(Math.round(G.skills.clips*.7+c.b+rnd(-5,8)),5,100);s.hype=Math.min(3,s.hype+s.clip/100*.8);if(Math.random()<.4)gain('clips');
+  news(`Le clip de « ${s.title} » est en ligne.`);closeModal();toast(`Clip noté ${s.clip}/100`)},
+ adform(v){modal(`<h2>Campagne sponsorisée</h2><p class="small muted">Tu paies pour pousser le son dans les fils d'actu. Ton marketing rend la campagne plus efficace.</p>${ADS.map((a,i)=>`<div class="row sep"><div class="grow"><b>Budget ${eur(a.c)}</b><div class="small muted">Environ ${fmt(a.c*60)} écoutes garanties</div></div><button class="btn pri" data-a="ad" data-v="${v},${i}">Lancer</button></div>`).join('')}<button class="btn" data-a="close">Annuler</button>`);return true},
+ ad(v){const[id,i]=v.split(',').map(Number),s=G.songs.find(x=>x.id===id),a=ADS[i];if(!canPay(a.c))return true;G.money-=a.c;
+  s.hype=Math.min(3,s.hype+a.h*(1+G.skills.marketing/200));s.ad=(s.ad||0)+a.c*60*(1+G.skills.marketing/100);closeModal();toast('Campagne lancée, résultats en fin de semaine.')},
+
+ /* label */
+ sign(v){const o=G.offers[v];G.label={name:o.name,tier:o.tier,share:o.share,mult:o.mult,left:o.songs,adv:o.adv};G.money+=o.adv;G.offers.splice(v,1);news(`Tu signes chez ${o.name}. Avance : ${eur(o.adv)}.`);toast('Contrat signé !')},
+ nego(v){const o=G.offers[v];o.neg=true;if(Math.random()<.25+G.skills.nego/130){o.share=Math.min(.6,o.share+.05);o.adv=Math.round(o.adv*1.25);if(Math.random()<.5)gain('nego');toast('Négociation réussie : meilleure part et meilleure avance.')}
+  else if(Math.random()<.3){G.offers.splice(v,1);toast('Le label s\'est vexé et retire son offre.')}else toast('Ils ne bougent pas d\'un centime.')},
+ decl(v){G.offers.splice(v,1)},
+ breakform(){modal(`<h2>Racheter ton contrat ?</h2><p>Ça te coûte ${eur(G.label.adv*1.2)} et tu redeviens indépendant.</p><div class="row"><button class="btn pri" data-a="break">Racheter</button><button class="btn" data-a="close">Annuler</button></div>`);return true},
+ break(){const c=G.label.adv*1.2;if(!canPay(c))return true;G.money-=c;news(`Tu quittes ${G.label.name} et redeviens indépendant.`);G.label=null;closeModal()},
+ ownlabel(){const n=document.getElementById('in-label').value.trim();if(!n){toast('Donne un nom à ton label.');return true}G.money-=1.5e6;G.own={name:n,roster:[]};news(`Tu fondes ton label : ${n}.`)},
+ signtal(v){const p=G.prospects[v];if(G.own.roster.length>=5){toast('Ton roster est complet (5 artistes).');return}if(!canPay(p.c))return;G.money-=p.c;G.own.roster.push({name:p.name,pot:p.pot});G.prospects.splice(v,1);if(Math.random()<.5)gain('leadership');news(`${p.name} rejoint ${G.own.name}.`)},
+
+ /* opportunités */
+ take(v){const o=G.offers[v],e={festival:30,brand:10,feat:15}[o.type];if(!useE(e))return;G.money+=o.pay;G.offers.splice(v,1);
+  if(o.type==='festival'){const g=Math.round(100+G.fans*.03*(1+G.skills.charisme/100));addFans(g);news(`Tu retournes le ${o.name}. +${fmt(g)} fans.`);toast(`+${eur(o.pay)} et +${fmt(g)} fans`)}
+  if(o.type==='brand'){toast(`+${eur(o.pay)} encaissés`)}
+  if(o.type==='feat'){const g=Math.round(50+G.fans*.015);addFans(g);toast(`+${eur(o.pay)} et +${fmt(g)} fans`)}},
+
+ /* scène */
+ gig(v){const V=VENUES[v];if(!useE(25))return;G.gig=G.t;
+  if(!V.p){const m=ri(20,60),g=ri(4,22)+Math.round(G.skills.charisme/5);G.money+=m;addFans(g);if(Math.random()<.3)gain('charisme');toast(`Scène ouverte : +${m} € au chapeau, +${g} fans`);return}
+  const att=Math.round(Math.min(V.cap,Math.max(8,G.fans*.05*(.6+G.skills.charisme/100)))*rnd(.8,1)),rev=att*V.p*.6-V.cap*1.5,g=Math.round(att*.07*(1+G.skills.charisme/100));
+  G.money+=rev;addFans(g);if(Math.random()<.25)gain('charisme');
+  save();render();info(V.n,`${fmt(att)} personnes sur ${fmt(V.cap)} places. ${att>=V.cap*.95?'Complet !':att<V.cap*.4?'La salle sonnait un peu creux.':'Belle ambiance.'}<br>Résultat : <b class="${rev<0?'bad':'good'}">${eur(rev)}</b> après les frais, +${fmt(g)} fans.`);return true},
+ tour(v){const T=TOURS[v],c=T.d*VENUES[T.v].cap*3;if(!canPay(c))return;G.money-=c;G.tour={i:+v,done:0};G.energy=Math.min(G.energy,maxE());news(`Tu pars en tournée : ${T.n}, ${T.d} dates.`);toast('La tournée démarre la semaine prochaine.')},
+
+ /* réseaux */
+ soc(v){const[n,a]=v.split(','),e=ACTL[a][1];if(!useE(e))return;const f=G.social[n],k=(1+(G.skills.charisme+G.skills.viralite)/60)*(1+image()/25);let g=0,msg='';
+  if(a==='post'){g=Math.round(rnd(10,30)*k+f*rnd(.004,.012));msg=`+${fmt(g)} abonnés`}
+  if(a==='trend'){if(Math.random()<.1+G.skills.viralite/220){g=Math.round(400*k+f*rnd(.08,.2));msg=`Le trend explose : +${fmt(g)} abonnés`}else{g=Math.round(rnd(5,20)*k);msg=`Flop relatif, +${fmt(g)} abonnés`}if(Math.random()<.3)gain('viralite')}
+  if(a==='live'){g=Math.round(rnd(8,20)*k+f*.004);const d=Math.round(f*.003*rnd(.3,1));G.money+=d;addFans(f*.004);msg=`Live sympa : +${fmt(g)} abonnés, ${eur(d)} de dons`}
+  if(a==='clash'){if(Math.random()<.5){g=Math.round(300*k+f*rnd(.05,.12));msg=`Tu gagnes le clash : +${fmt(g)} abonnés`;if(Math.random()<.3)gain('viralite')}else{g=-Math.round(f*.04);addFans(-G.fans*.01);msg=`Tu te fais ratio : ${fmt(g)} abonnés`}}
+  G.social[n]=Math.max(0,f+g);if(g>0)addFans(g*.25);toast(msg)},
+
+ /* vie */
+ train(k){const lv=G.skills[k];if(!useE(8+Math.floor(lv/6)))return;gain(k,lv<40&&Math.random()<.5?2:1)},
+ coach(k){const lv=G.skills[k],c=100+lv*lv;if(!canPay(c)||!useE(8+Math.floor(lv/6)))return;G.money-=c;gain(k,3)},
+ health(v){v=+v;if(v===0){if(!canPay(20)||!useE(10))return;G.money-=20;G.health=Math.min(100,G.health+5)}
+  if(v===1){if(!useE(30))return;G.health=Math.min(100,G.health+13)}
+  if(v===2){if(!canPay(1500))return;G.money-=1500;G.health=Math.min(100,G.health+25)}toast(`Santé : ${Math.round(G.health)}/100`)},
+ job(v){v=+v;G.job=v<0?null:v;G.energy=Math.min(G.energy,maxE());toast(v<0?'Tu rends ton tablier.':`Embauché : ${JOBS[v].n}. L'énergie max baisse.`)},
+ home(v){v=+v;const dep=HOMES[v].c*2;if(v>G.home&&!canPay(dep))return;if(v>G.home)G.money-=dep;G.home=v;G.energy=Math.min(G.energy,maxE());toast(`Nouvelle adresse : ${HOMES[v].n}${v&&dep?` (caution ${eur(dep)})`:''}`)},
+ buy(v){const x=ITEMS.find(i=>i.id===v);if(!canPay(x.c))return;G.money-=x.c;G.items.push(v);gain('charisme',x.ch);toast(`${x.n} : c'est à toi.`)},
+ hire(v){G.team[v]=true;toast('Bienvenue dans l\'équipe.')}, fire(v){delete G.team[v]},
+ liv(v){v=+v;if(v<0){G.money+=G.livret;G.livret=0}else{if(!canPay(v))return;G.money-=v;G.livret+=v}},
+ stk(v){const[id,n]=v.split(','),amt=+n,s=G.stocks[id];if(amt<0){G.money+=s.u*G.prices[id];s.u=0;s.cost=0;toast('Position vendue.')}else{if(!canPay(amt))return;G.money-=amt;s.u+=amt/G.prices[id];s.cost+=amt}},
+ buyp(v){const p=PROPS[v];if(!canPay(p.c))return;G.money-=p.c;G.props.push({i:+v,val:p.c});toast(`${p.n} acheté.`)},
+ sellp(v){const p=G.props[v];G.money+=p.val*.95;G.props.splice(v,1);toast('Bien vendu (5 % de frais).')},
+};
+function release(s,hype){s.rel=G.t;s.hype=hype;G.lastRel=G.t;if(G.label){G.label.left--;if(G.label.left<=0){news(`Contrat rempli : tu es libre de ${G.label.name}.`);G.label=null}}}
+function keepName(){const i=document.getElementById('in-name');if(i)draft.name=i.value.trim()}
+
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-a]');if(!el||el.disabled)return;
+  if(el.id==='veil'&&e.target!==el)return;
+  const fn=A[el.dataset.a];if(!fn)return;
+  const handled=fn(el.dataset.v,el);
+  if(G&&!handled)save();
+  if(!handled)render();
+});
+document.addEventListener('submit',e=>e.preventDefault());
+
+function start(data){
+  if(data&&data.G&&data.G.name){G=data.G}
+  render();
+}
+window.claude?.hot?.snapshot(()=>({G}));
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+</script>
+</body>
+</html>

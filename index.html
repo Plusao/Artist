@@ -2,14 +2,14 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Backstage">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#070c0b">
-<title>Backstage</title>
+<title>Backstage — Édition illustrée</title>
 <style>
 :root{
   /* Coque d'app : #app est la seule zone qui défile, barre et onglets en verre flottent par-dessus. */
@@ -256,6 +256,17 @@ input[type=file]{font-size:14px;max-width:100%;color:var(--ink2)}
 .pick b{font-size:16px;display:flex;justify-content:space-between}
 @media (hover:hover){.btn:hover{background:rgba(255,255,255,.18)}.btn.pri:hover{filter:brightness(1.05)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* Illustrations locales et conversations — aucun service externe. */
+.cover img{width:100%;height:100%;display:block;object-fit:cover}.cover{overflow:hidden;flex-shrink:0}.portrait svg{width:100%;height:100%;display:block}.portrait{flex-shrink:0;overflow:hidden}.cover-editor{display:flex;flex-direction:column;gap:12px;padding:14px;background:#ffffff05;border:1px solid var(--stroke);border-radius:18px}.cover-editor .chips{flex-wrap:nowrap;overflow-x:auto;padding:3px 0 7px;scrollbar-width:none}.cover-editor .chips button{white-space:nowrap}.cover-editor .chips button.on{color:var(--acc);border-color:var(--acc)}.art-options{display:flex;gap:9px;overflow-x:auto;padding:3px 0 10px;scrollbar-width:none}.art-options button{flex:0 0 76px;display:flex;flex-direction:column;gap:6px;border:1px solid var(--stroke);padding:5px;border-radius:13px;font-size:9px;color:var(--ink2);min-height:44px}.art-options button.on{border-color:var(--acc);color:var(--acc)}.art-options img{width:64px;height:64px;object-fit:cover;border-radius:9px}.post-preview{position:relative;max-width:300px;align-self:center;overflow:hidden;border-radius:18px;background:#101511}.post-preview>img{width:100%;display:block}.post-preview>p{position:absolute;bottom:0;padding:35px 15px 15px;left:0;right:0;color:#fff;background:linear-gradient(transparent,#000c);font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere;pointer-events:none}.story-preview{max-width:230px;aspect-ratio:9/14}.story-preview>img{height:100%;object-fit:cover}.network-picker{display:flex;flex-wrap:nowrap!important;gap:8px}.network-picker button{flex:1;min-height:44px;padding:10px 7px;white-space:nowrap;font-size:12px}.quick-compose{display:flex;flex-direction:row!important;gap:10px;align-items:center;text-align:left;min-height:76px;width:100%}.quick-compose span:not(.portrait){font-size:13px;color:var(--ink2);flex:1}.quick-compose>b{font-size:22px;font-weight:400;color:var(--acc)}.feed-modes{display:flex;gap:5px}.feed-modes button{flex:1;font-size:11px;padding:9px 10px;min-height:44px}.social-notice{font-size:9px;letter-spacing:.5px;color:var(--ink3);padding:0 4px;display:flex;justify-content:space-between;align-items:center;gap:7px}.social-notice .link{font-size:10px;letter-spacing:0;min-height:44px}.social-card{gap:13px}.social-card>.row{flex-wrap:nowrap;gap:10px}.social-card .row b{font-size:13px}.social-card .grow{min-width:0}.social-card .hint{font-size:10px}.follow-btn{border:1px solid #ffffff30;border-radius:99px;font-size:10px;font-weight:600;padding:8px 12px;min-height:36px}.follow-btn.active{color:var(--acc);border-color:#d6f58455;background:#d6f5840a}.sim-verify{color:var(--acc);font-size:10px;margin-left:5px}.tweet-text{font-size:14px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}.social-image{width:100%;display:block;overflow:hidden;border-radius:16px;max-height:340px;padding:0}.social-image img{display:block;width:100%;max-height:340px;object-fit:cover}.tweet-actions{border-bottom:1px solid #ffffff12;padding-bottom:4px;display:flex;gap:10px;align-items:center;justify-content:space-between}.tweet-actions button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;min-width:48px;color:var(--ink2);font-size:21px}.tweet-actions button>span{font-size:11px}.tweet-actions .liked{color:var(--pink)}.tweet-actions .reposted{color:var(--good)}.tweet-actions>.hint{white-space:nowrap;font-size:10px}.reply-preview{font-size:11px;color:var(--ink2);line-height:1.6;padding-left:13px;border-left:2px solid #ffffff16;overflow-wrap:anywhere}.reply-preview b{color:var(--ink);font-size:10px;margin-right:4px}.see-thread{font-size:11px;min-height:35px;text-align:left}.thread-original{font-size:15px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}.thread-media{width:100%;max-height:270px;object-fit:cover;border-radius:16px}.thread-replies{display:flex;flex-direction:column}.thread-reply{display:flex;align-items:flex-start;gap:10px;padding:16px 0;border-bottom:1px solid var(--stroke)}.thread-reply b{font-size:11px}.thread-reply p{font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;margin:5px 0}.thread-reply small{font-size:9px}.sv-body{position:relative;isolation:isolate;overflow:hidden;justify-content:flex-end!important;padding:30px 24px 55px!important}.sv-body>img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:cover!important;z-index:-2;border-radius:0!important}.sv-body:after{content:'';position:absolute;inset:0;background:linear-gradient(#0001 25%,#000a);z-index:-1;pointer-events:none}.sv-body>p{color:#fff;text-shadow:0 2px 10px #0008;font-size:23px!important;line-height:1.3;font-weight:650;overflow-wrap:anywhere}.sv-body>.pill{background:#10151099;backdrop-filter:blur(8px);font-size:10px;margin-top:14px}.sv-head{background:linear-gradient(#0008,transparent);position:relative;z-index:3}.sv-head .hint{font-size:9px}.art-enlarged{width:100%;border-radius:18px}.version-local{font-size:10px;color:var(--ink3);text-align:center;margin:12px 0}.tweet-actions button:active,.art-options button:active{transform:scale(.96)}
+@media(max-width:360px){.network-picker button{font-size:10px}.feed-modes button{font-size:10px}.social-card .row b{font-size:12px}.follow-btn{padding:7px 10px;font-size:9px}.social-notice{font-size:8px}.social-notice .link{font-size:9px}.social-card{padding:15px}.tweet-text{font-size:13px}.tweet-actions{gap:3px}.tweet-actions>.hint{font-size:9px}.sv-body>p{font-size:20px!important}}
+@media(prefers-reduced-motion:reduce){.sv-bars .cur b{animation:none}}
+/* Long release names must truncate within the agenda rather than widen the app. */
+.grow>.ell{display:block;max-width:100%}.hero h2,.lt h1{overflow-wrap:anywhere}.card,.agenda,.arow,.crow,.lrow{min-width:0}.hscroll{max-width:calc(100% + 32px)}
+@media(max-width:430px){.skill{grid-template-columns:34px minmax(0,1fr) 94px;gap:8px}.skill>div:nth-child(2)>b{font-size:12px;overflow-wrap:anywhere}.skill .btn.sm{flex-direction:column;gap:1px;min-height:44px;padding:7px 5px;font-size:11px}.skill .cost{font-size:10px}}
+/* Keep the story canvas full-screen; neither the header nor the caption sizes it. */
+#sv .sv-body{position:absolute;inset:0;width:100%;height:100%;padding-top:100px!important}#sv .sv-body>img{max-width:none!important;box-shadow:none!important}#sv .sv-x{min-width:44px;min-height:44px}
+.chips button[data-a="sf_"]{display:flex;align-items:center;gap:7px}.chart-artist{display:flex;align-items:center;gap:5px;margin-top:3px}.chart-artist>span:last-child{overflow:hidden;text-overflow:ellipsis}.chart-artist .portrait{flex:none}
+
 </style>
 </head>
 <body>
@@ -760,7 +771,7 @@ const arow=e=>{const w=wdate(e.t);return `<div class="arow"><div class="adate"><
 function feedCard(f){
   const yt=f.kind==='clip';
   return yt?`<button class="vid" data-a="artist" data-v="${esc(f.artist)}"><div class="thumb" style="background:linear-gradient(135deg,hsl(${hash(f.title)%360} 60% 38%),hsl(${(hash(f.title)+60)%360} 55% 16%))">${portrait(f.artist,56)}<span class="dur">${Math.floor(rnd(2,4))}:${String(ri(10,59))}</span><span class="play">▶</span></div><div><b class="ell" style="display:block;font-size:13.5px">${esc(f.title)} (clip officiel)</b><small class="muted">${esc(f.artist)} · YouTube · ${f.own?'toi':fmt(f.n)+' vues'}</small></div></button>`
-   :`<button class="rel" data-a="artist" data-v="${esc(f.artist)}">${cover({title:f.title},132)}<b class="ell">${esc(f.title)}</b><small class="ell">${esc(f.artist)} · ${f.kind==='album'?'Album':'Single'}</small></button>`;
+   :`<button class="rel" data-a="artist" data-v="${esc(f.artist)}">${cover(f,132)}<b class="ell">${esc(f.title)}</b><small class="ell">${esc(f.artist)} · ${f.kind==='album'?'Album':'Single'}</small></button>`;
 }
 
 /* ============ Musique ============ */
@@ -791,7 +802,7 @@ function vMusic(){
 /* ============ Charts ============ */
 function vCharts(){
   const s=sub.charts;let h=lt('Classements',s==='top'?'Top 50 France':s==='sorties'?'Sorties':'Artistes')+seg([['top','Top 50'],['sorties','Sorties'],['artistes','Artistes']]);
-  if(s==='top')h+=`<section class="card"><h3>Streams hebdo · semaine ${week()}</h3>${G.top.map(x=>{const d=x.prev?x.prev-x.rk:null;return `<div class="crow ${x.me?'me':''}"><div class="rk">${x.rk}<small style="color:${d>0?'var(--good)':d<0?'var(--bad)':'var(--ink3)'}">${d==null?'NEW':d>0?'▲'+d:d<0?'▼'+(-d):'='}</small></div>${cover({title:x.title},44)}<div class="grow"><b class="ell">${esc(x.title)}</b><div class="hint ell">${esc(x.artist)}</div></div><div style="text-align:right" class="num"><b style="font-size:14px">${fmt(x.s)}</b></div></div>`}).join('')||'<div class="hint">Classement indisponible.</div>'}</section>`;
+  if(s==='top')h+=`<section class="card"><h3>Streams hebdo · semaine ${week()}</h3>${G.top.map(x=>{const d=x.prev?x.prev-x.rk:null;return `<div class="crow ${x.me?'me':''}"><div class="rk">${x.rk}<small style="color:${d>0?'var(--good)':d<0?'var(--bad)':'var(--ink3)'}">${d==null?'NEW':d>0?'▲'+d:d<0?'▼'+(-d):'='}</small></div>${cover(x,44)}<div class="grow"><b class="ell">${esc(x.title)}</b><div class="hint ell chart-artist">${portrait(x.artist,20)}<span>${esc(x.artist)}</span></div></div><div style="text-align:right" class="num"><b style="font-size:14px">${fmt(x.s)}</b></div></div>`}).join('')||'<div class="hint">Classement indisponible.</div>'}</section>`;
   if(s==='sorties'){
     const f=G.feed.filter(x=>sf==='all'||(sf==='yt'?x.kind==='clip':x.kind!=='clip'));
     h+=`<div class="chips">${[['all','Tout'],['yt','YouTube'],['app','Dans l\'appli']].map(([k,n])=>`<button class="${sf===k?'on':''}" data-a="sf" data-v="${k}">${n}</button>`).join('')}</div>
@@ -985,7 +996,7 @@ function sheetArtist(n){const a=AMAP.get(n);if(!a)return '';const el=a.ml<=Math.
   <button class="btn pri" data-a="askfeat" data-v="${esc(a.n)}" ${have||!el?'disabled':''}>${have?'Déjà dans tes feats':el?'Demander un feat':'Hors de ta portée pour l\'instant'}</button>`}
 
 /* ---- options ---- */
-function sheetOpts(){return `<h2>Options</h2><div class="btns"><button class="btn" data-a="export">Exporter ma carrière</button><label class="btn">Importer<input type="file" accept="application/json,.json" data-a="import" hidden></label></div><button class="btn danger" data-a="reset">Nouvelle carrière</button><p class="hint">Sauvegarde automatique dans ce navigateur. Les noms d'artistes et de labels sont réels, les chiffres d'audience approximatifs, les sorties et contrats fictifs.</p>`}
+function sheetOpts(){return `<h2>Options</h2><p class="version-local">Édition illustrée · pochettes & conversations · fichier local</p><div class="btns"><button class="btn" data-a="export">Exporter ma carrière</button><label class="btn">Importer<input type="file" accept="application/json,.json" data-a="import" hidden></label></div><button class="btn danger" data-a="reset">Nouvelle carrière</button><p class="hint">Sauvegarde automatique dans ce navigateur. Les noms d'artistes et de labels sont réels, les chiffres d'audience approximatifs, les sorties et contrats fictifs.</p>`}
 
 /* ---- rapport de fin de semaine ---- */
 function showReport(R){
@@ -1099,13 +1110,264 @@ Object.assign(A,{
   reset2:()=>{try{localStorage.removeItem(KEY)}catch(e){}G=null;closeSheet();render()},
 });
 
+const ARTIST_STYLE={
+ 'Aya Nakamura':[4,'long',0],'SCH':[2,'long',1],'Ninho':[5,'short',0],'Damso':[6,'bald',1],'Jul':[1,'short',1],'Gazo':[6,'locks',1],'Tiakola':[5,'locks',0],'Hamza':[2,'short',1],'Nekfeu':[1,'short',1],'Orelsan':[1,'short',0],'Stromae':[3,'short',0],'Angèle':[0,'blonde',0],'Pomme':[0,'bob',0],'Shay':[4,'long',0],'Booba':[5,'bald',1],'Kaaris':[6,'short',1],'Lous and the Yakuza':[6,'bald',0],'Clara Luciani':[1,'bangs',0],'Zaho de Sagazan':[0,'blonde',0],'Theodora':[5,'long',0],'Yseult':[6,'short',0],'Kendrick Lamar':[5,'locks',1],'Drake':[3,'short',1],'The Weeknd':[4,'curly',1],'SZA':[5,'curly',0],'Beyoncé':[3,'blonde',0],'Rihanna':[4,'long',0],'Billie Eilish':[0,'bangs',0],'Taylor Swift':[0,'blonde',0],'Dua Lipa':[2,'long',0],'Ariana Grande':[2,'pony',0],'Sabrina Carpenter':[0,'blonde',0],'Olivia Rodrigo':[2,'long',0],'Doja Cat':[3,'bald',0],'Travis Scott':[5,'locks',0],'Tyler, The Creator':[5,'cap',0],'A$AP Rocky':[5,'locks',0],'J. Cole':[4,'locks',1],'Nicki Minaj':[4,'pink',0],'Cardi B':[3,'long',0],'Post Malone':[1,'short',1],'Bad Bunny':[3,'short',1],'Rosalía':[1,'long',0],'Karol G':[2,'pink',0],'Shakira':[2,'blonde',0],'Burna Boy':[6,'locks',1],'Rema':[5,'locks',0],'Wizkid':[5,'short',0],'Tems':[6,'long',0],'Tyla':[4,'curly',0],'Daft Punk':[1,'helmet',0],'David Guetta':[1,'long',1],'DJ Snake':[2,'short',1],'Justice':[1,'long',1]
+};
+function drawnPortrait(name,size=44){
+ const h=hash(name),a=AMAP.get(name),cfg=ARTIST_STYLE[name]||[a&&['af','us'].includes(a.c)&&a.g!=='Rock'?4+h%3:h%5,['short','curly','long','cap'][h%4],h%3===0?1:0];
+ const [tone,hair,beard]=cfg,skin=['#f0cbb5','#e3b89a','#c99c78','#b58362','#a87550','#84583e','#60402e'][tone],bg=['#526554','#6a574e','#53546b','#62684b','#5a7173','#765653'][h%6],cloth=['#d7e89f','#bd9a80','#91a6a4','#393d3c','#afa2c4'][h%5];
+ const hc=hair==='blonde'?'#dbc389':hair==='pink'?'#d387ac':'#252521';
+ let back=['long','blonde','bangs','curly','pink','pony','locks','bob'].includes(hair)?`<path d="M18 64Q9 8 40 8T63 65Z" fill="${hc}"/>`:'';
+ let front=hair==='bald'?'':hair==='cap'?`<path d="M18 27Q16 6 40 9Q59 9 61 26Z" fill="#53624a"/><path d="M18 26h49" stroke="#1e2a20" stroke-width="5"/>`:hair==='locks'?`<path d="M19 28Q18 8 40 10T61 29M20 23L14 50M28 15L25 42M38 14L35 31M49 15L50 38M58 20L65 50" fill="none" stroke="${hc}" stroke-width="6" stroke-linecap="round"/>`:hair==='curly'?`<path d="M17 30Q10 17 20 16Q19 7 30 10Q39 0 46 9Q61 5 61 18Q72 25 62 34L55 23Q39 27 25 24Z" fill="${hc}"/>`:hair==='bangs'||hair==='blonde'||hair==='pink'?`<path d="M18 31Q14 8 40 9T62 31L53 24L47 28L42 22L32 28L25 25Z" fill="${hc}"/>`:`<path d="M19 29Q16 9 40 10T61 29L56 21Q38 28 24 22Z" fill="${hc}"/>`;
+ if(hair==='helmet')front='<path d="M15 23Q15 5 40 5T65 23V50H15Z" fill="#b6baaa"/><path d="M18 26H62V43H18Z" fill="#202c2a"/><path d="M23 30H57" stroke="#d6f584" stroke-width="2"/>';
+ return `<span class="portrait" style="width:${size}px;height:${size}px" role="img" aria-label="Portrait stylisé de ${esc(name)}"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="${bg}"/><circle cx="60" cy="15" r="31" fill="#fff" opacity=".05"/>${back}<path d="M5 82Q7 61 30 60H50Q73 62 75 82" fill="${cloth}"/><path d="M31 51v12q9 10 18 0V51" fill="${skin}"/><ellipse cx="40" cy="35" rx="21" ry="25" fill="${skin}"/><path d="M38 33L35 43H42" fill="none" stroke="#503e35" opacity=".35" stroke-width="1.5"/><path d="M25 31h7m16 0h7" stroke="#302923" stroke-width="2" stroke-linecap="round"/><circle cx="29" cy="35" r="1.4" fill="#292724"/><circle cx="51" cy="35" r="1.4" fill="#292724"/><path d="M34 49q6 3 12 0" fill="none" stroke="#704d40" stroke-width="1.5"/>${beard?'<path d="M20 41Q24 63 40 62Q57 63 60 41L52 48L48 46L40 48L33 46L27 48Z" fill="#272622" opacity=".9"/>':''}${front}${['SCH','DJ Snake','Bad Bunny'].includes(name)?'<path d="M20 32h16v10H22Zm24 0h16l-2 10H44Z" fill="#202925"/><path d="M36 35h8" stroke="#202925" stroke-width="2"/>':''}</svg></span>`;
+}
+
+Object.assign(ARTIST_STYLE,{
+ 'Théodora':[5,'long',0],'Dadju':[5,'short',1],'Tayc':[5,'short',1],'Gims':[5,'bald',1],'Niska':[5,'short',1],'Lacrim':[2,'bald',1],'Zola':[4,'locks',0],'SDM':[6,'short',1],'Naps':[2,'short',1],'Luidji':[5,'short',1],'Dinos':[5,'short',1],'Disiz':[4,'short',1],'Alpha Wann':[5,'cap',1],'Laylow':[4,'locks',0],'Josman':[5,'short',1],'Sofiane':[2,'short',1],'Médine':[3,'bald',1],'Oxmo Puccino':[6,'bald',1],'Soprano':[5,'bald',1],'Jain':[1,'bangs',0],'Indila':[2,'long',0],'Louane':[0,'blonde',0],'Vitaa':[2,'long',0],'Vianney':[1,'short',1],'Juliette Armanet':[0,'bangs',0],'Hoshi':[1,'bangs',0],'Imen Es':[2,'long',0],'Ronisia':[5,'long',0],'Lartiste':[2,'short',1],'Freeze Corleone':[5,'locks',1],'Lomepal':[1,'curly',1],'Vald':[0,'short',1],'Kendji Girac':[2,'short',1],'Slimane':[3,'bald',1],'Pierre de Maere':[0,'short',0],'Christine and the Queens':[0,'short',0],
+ 'Eminem':[0,'cap',1],'Kanye West':[5,'bald',1],'Jay-Z':[5,'locks',0],'Snoop Dogg':[5,'locks',1],'Dr. Dre':[5,'bald',0],'50 Cent':[5,'cap',1],'Future':[5,'locks',1],'21 Savage':[5,'short',1],'JID':[5,'locks',0],'Lil Wayne':[5,'locks',0],'Lil Uzi Vert':[5,'locks',0],'Playboi Carti':[5,'locks',0],'Frank Ocean':[5,'short',0],'Bruno Mars':[3,'curly',0],'Chris Brown':[3,'short',1],'Usher':[4,'short',1],'Kehlani':[3,'long',0],'Summer Walker':[5,'long',0],'Megan Thee Stallion':[5,'long',0],'Lana Del Rey':[1,'long',0],'Lady Gaga':[0,'blonde',0],'Katy Perry':[1,'long',0],'Selena Gomez':[2,'bob',0],'Miley Cyrus':[1,'blonde',0],'Chappell Roan':[0,'curly',0],'Tate McRae':[1,'long',0],'Gracie Abrams':[1,'bob',0],'Sia':[0,'blonde',0],
+ 'Ed Sheeran':[0,'curly',1],'Harry Styles':[1,'curly',0],'Adele':[0,'blonde',0],'Sam Smith':[0,'bald',1],'RAYE':[3,'curly',0],'Jorja Smith':[4,'long',0],'FKA twigs':[4,'locks',0],'Charli XCX':[1,'curly',0],'Central Cee':[3,'short',0],'Dave':[5,'short',1],'Stormzy':[6,'bald',1],'Skepta':[5,'short',1],'Little Simz':[5,'locks',0],'Karol G':[2,'pink',0],'Rauw Alejandro':[2,'short',1],'Shakira':[2,'blonde',0],'J Balvin':[2,'short',1],'Maluma':[2,'short',1],'Becky G':[2,'long',0],'Ayra Starr':[5,'long',0],'Asake':[6,'locks',0],'Davido':[5,'short',1],'Fally Ipupa':[5,'short',1],'Tiwa Savage':[5,'long',0],'Jung Kook':[1,'bangs',0],'Jimin':[0,'blonde',0],'V':[1,'bangs',0],'LISA':[1,'bangs',0],'ROSÉ':[0,'blonde',0],'JENNIE':[1,'long',0],'PSY':[1,'short',0]
+});
+portrait=function(name,size=44){
+ const groups={'PNL':['Ademo','N.O.S'],'Bigflo & Oli':['Bigflo','Oli'],'Daft Punk':['Daft Punk','Daft Punk'],'Justice':['Gaspard Justice','Xavier Justice'],'BLACKPINK':['LISA','JENNIE'],'BTS':['Jung Kook','V']};
+ if(!groups[name])return drawnPortrait(name,size);
+ const children=groups[name].map((n,i)=>{const s=drawnPortrait(n,44).match(/<svg[^>]*>([\s\S]*)<\/svg>/)[1];return `<svg x="${i?35:-4}" y="0" width="66" height="90" viewBox="0 0 80 80">${s}</svg>`}).join('');
+ return `<span class="portrait" role="img" aria-label="Portrait illustré de ${esc(name)}" style="width:${size}px;height:${size}px"><svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="90" fill="#4e5c53"/>${children}</svg></span>`;
+};
+const ART_THEMES=['Muse','Grand tourisme','Évasion','Art abstrait','Fleurs de nuit','Métropole','Orbite','Studio','Ombres'];
+const artCache=new Map();
+function artwork(theme,seed,label=''){
+ const key=theme+'|'+seed+'|'+label;if(artCache.has(key))return artCache.get(key);
+ const h=hash(seed),t=((Number(theme)||0)%ART_THEMES.length+ART_THEMES.length)%ART_THEMES.length;
+ const palettes=[['#131c29','#e39b91','#b63e55','#f5d0a4'],['#10191e','#7faba6','#af413e','#d9d8ac'],['#172f3a','#bf755f','#6d9390','#eed1aa'],['#151b35','#a69aeb','#e17c57','#e5e4b5'],['#142722','#b96d8c','#ad303e','#debd88'],['#111426','#686398','#e09d64','#d9cee5']];
+ const [dark,mid,accent,light]=palettes[h%palettes.length],sun=90+h%170;
+ let scene='';
+ if(t===0){scene=`<path d="M70 400Q65 238 144 224Q216 215 256 400" fill="${accent}"/><path d="M149 180L141 239Q167 270 191 235L179 171" fill="${light}"/><path d="M105 173Q67 69 126 39Q202 4 231 92L232 249L196 220L176 157Z" fill="${dark}"/><path d="M119 83Q140 55 179 72L190 114L204 132L189 142Q190 181 157 190L119 157Z" fill="${light}"/><path d="M111 120Q89 72 133 51Q177 31 197 71Q148 58 133 116L116 207L90 229Z" fill="${dark}"/><path d="M168 111l17 3M171 155l14-2" stroke="${accent}" stroke-width="3"/><circle cx="143" cy="145" r="8" fill="none" stroke="${accent}" stroke-width="3"/><path d="M248 0L210 400H280L340 0" fill="${mid}" opacity=".18"/>`;}
+ else if(t===1){scene=`<path d="M0 258Q200 230 400 255V400H0" fill="${dark}"/><path d="M0 335L400 313M0 349L400 327" stroke="${light}" opacity=".2"/><ellipse cx="209" cy="296" rx="160" ry="28" fill="#000" opacity=".4"/><path d="M44 249L82 225L139 178Q156 166 215 177L285 219L337 230Q355 240 349 273L330 284H69L47 272Z" fill="${accent}"/><path d="M105 222L151 184H201L250 220Z" fill="${dark}"/><path d="M177 184v38M84 235L324 244" stroke="${light}" stroke-width="2" opacity=".7"/><circle cx="109" cy="274" r="28" fill="#101216"/><circle cx="294" cy="274" r="28" fill="#101216"/><circle cx="109" cy="274" r="16" fill="${mid}"/><circle cx="294" cy="274" r="16" fill="${mid}"/><path d="M97 262l24 24m0-24l-24 24m185-24l24 24m0-24l-24 24" stroke="${dark}" stroke-width="3"/><path d="M49 246h29m246-2h23" stroke="${light}" stroke-width="6"/><path d="M0 119H400" stroke="${light}" opacity=".25"/>`;}
+ else if(t===2){scene=`<circle cx="${sun}" cy="110" r="48" fill="${light}"/><path d="M0 207L77 97L141 177L212 104L310 212L400 136V400H0Z" fill="${mid}"/><path d="M43 146l34-49l35 43l-32-15Z" fill="${light}" opacity=".6"/><path d="M0 226Q90 176 178 223T400 224V400H0" fill="${dark}"/><path d="M165 224Q215 254 162 281T226 330L310 400H88L176 327Q104 290 165 263T165 224" fill="${light}" opacity=".55"/><path d="M0 400V240L37 212L71 400M343 400L370 192L400 240V400" fill="${dark}"/>`;}
+ else if(t===3){scene=`<circle cx="${150+h%100}" cy="173" r="128" fill="${accent}"/><path d="M-45 320Q190-45 411 51L457 134Q181 82 72 446Z" fill="${mid}"/><path d="M-18 291Q200 17 414 111M0 313Q200 40 414 134M20 335Q200 64 414 157" stroke="${light}" fill="none" stroke-width="2"/><rect x="107" y="160" width="174" height="174" rx="80" transform="rotate(33 194 247)" fill="${dark}"/><circle cx="277" cy="291" r="40" fill="${light}"/><path d="M39 67L110 124L63 199Z" fill="${light}" opacity=".7"/>`;}
+ else if(t===4){scene=`<path d="M188 400Q131 187 221 88M181 366Q289 223 283 144M178 344Q63 255 91 189" stroke="${mid}" stroke-width="7" fill="none"/><path d="M184 323Q103 269 112 219Q177 225 184 323M202 278Q273 216 313 242Q294 306 202 278" fill="${mid}"/>${[[213,110,1],[288,169,.7],[94,194,.8]].map(([x,y,z])=>`<g transform="translate(${x} ${y}) scale(${z})">${[0,60,120,180,240,300].map(r=>`<ellipse cy="-31" rx="23" ry="42" fill="${accent}" transform="rotate(${r})" opacity=".85"/>`).join('')}<circle r="20" fill="${light}"/><circle r="9" fill="${dark}"/></g>`).join('')}`;}
+ else if(t===5){scene=`<circle cx="292" cy="86" r="42" fill="${light}" opacity=".7"/>${Array.from({length:10},(_,i)=>{const ht=80+(hash(seed+i)%160);return `<rect x="${i*45-15}" y="${310-ht}" width="39" height="${ht}" fill="${i%2?mid:dark}"/>${Array.from({length:5},(_,j)=>`<path d="M${i*45-7} ${320-ht+j*22}h8m9 0h8" stroke="${light}" stroke-width="5" opacity="${(i+j)%3===0?.7:.16}"/>`).join('')}`}).join('')}<path d="M0 310H400V400H0" fill="${dark}"/><path d="M180 310L124 400M216 310L274 400" stroke="${accent}" stroke-width="3"/><path d="M196 326v12m0 12v23m0 15v12" stroke="${light}" stroke-width="4"/>`;}
+ else if(t===6){scene=`${Array.from({length:38},(_,i)=>`<circle cx="${hash(seed+'x'+i)%400}" cy="${hash(seed+'y'+i)%400}" r="${i%4===0?1.8:.8}" fill="${light}" opacity=".7"/>`).join('')}<circle cx="215" cy="190" r="99" fill="${mid}"/><path d="M158 103Q243 176 167 278Q319 253 310 173Q295 101 224 92" fill="${accent}" opacity=".6"/><ellipse cx="215" cy="198" rx="180" ry="39" fill="none" stroke="${light}" stroke-width="13" transform="rotate(-25 215 198)"/><circle cx="68" cy="74" r="17" fill="${accent}"/>`;}
+ else if(t===7){scene=`<rect x="35" y="83" width="330" height="215" rx="12" fill="${dark}" stroke="${mid}" stroke-width="4"/><rect x="56" y="103" width="196" height="100" rx="4" fill="${mid}" opacity=".5"/>${Array.from({length:14},(_,i)=>`<path d="M${65+i*13} 175v-${12+hash(seed+i)%56}" stroke="${light}" stroke-width="7" opacity=".65"/>`).join('')}<circle cx="307" cy="143" r="26" fill="${accent}"/><circle cx="307" cy="143" r="14" fill="${dark}"/>${Array.from({length:9},(_,i)=>`<path d="M${59+i*34} 228v44" stroke="${mid}" stroke-width="4"/><rect x="${51+i*34}" y="${235+i%3*8}" width="16" height="9" rx="2" fill="${light}"/>`).join('')}<path d="M107 398L152 298H248L294 398" fill="${dark}"/><rect x="264" y="36" width="35" height="71" rx="17" fill="${light}"/><path d="M254 70v21q0 31 27 31t27-31V70M281 122v83" fill="none" stroke="${accent}" stroke-width="5"/>`;}
+ else{scene=`<circle cx="200" cy="165" r="117" fill="${accent}" opacity=".6"/><path d="M112 400L123 273L169 231L163 194Q132 177 149 136Q170 104 201 128Q231 145 208 185L199 231L250 258L290 400Z" fill="${dark}"/><path d="M130 278L67 190L86 179L162 257M241 270L292 153L312 163L268 304" fill="${dark}"/><path d="M0 340H400M0 360H400M0 380H400" stroke="${light}" opacity=".15"/>`;}
+ const txt=label?`<text x="25" y="365" fill="${light}" font-family="Arial,sans-serif" font-size="${label.length>20?18:25}" font-weight="700" letter-spacing="1">${esc(label.slice(0,30).toUpperCase())}</text><text x="27" y="385" fill="${light}" font-family="Arial,sans-serif" font-size="7" letter-spacing="4" opacity=".8">BACKSTAGE · ORIGINAL ARTWORK</text>`:'';
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="bg" x2=".8" y2="1"><stop stop-color="${mid}"/><stop offset="1" stop-color="${dark}"/></linearGradient></defs><rect width="400" height="400" fill="url(#bg)"/>${scene}<rect x="12" y="12" width="376" height="376" fill="none" stroke="${light}" opacity=".14"/>${txt}</svg>`;
+ const uri='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);artCache.set(key,uri);if(artCache.size>240)artCache.delete(artCache.keys().next().value);return uri;
+}
+function assignArtwork(o){if(!Number.isInteger(o.artTheme)){o.artTheme=G.artSeq%ART_THEMES.length;G.artSeq++}if(!o.artSeed)o.artSeed=String(o.id||'')+'|'+o.title+'|'+(o.artist||G.name)}
+function coverObject(o){
+ if(!G)return o;
+ if(G.songs.includes(o)||G.albums.includes(o))return o;
+ const own=o.artist===G.name||o.me||o.own;
+ if(own){const primary=o.kind==='album'?G.albums:G.songs;const match=primary.find(s=>s.title===o.title)||G.albums.find(a=>a.title===o.title);if(match)return match}
+ if(o.cover||Number.isInteger(o.artTheme))return o;
+ return G.feed.find(f=>f.title===o.title&&(!o.artist||f.artist===o.artist))||o;
+}
+
+cover=function(o,size=52){const a=coverObject(o),theme=Number.isInteger(a.artTheme)?a.artTheme:hash((a.artist||'')+'|'+a.title)%ART_THEMES.length,src=a.cover||artwork(theme,a.artSeed||((a.artist||'')+'|'+a.title),a.title||'');return `<span class="cover" style="width:${size}px;height:${size}px;font-size:${size}px"><img src="${esc(src)}" alt="Pochette ${ART_THEMES[theme]} : ${esc(a.title||'création originale')}" loading="lazy" decoding="async"></span>`};
+
+/* Social simulation: saved conversations, contextual replies, deterministic ranking. */
+let netView='x',timelineMode='foryou';
+const HANDLES=['leonie.mp3','mehdi_93','sarah.wav','enzo_en_repeat','lina.minuit','sam_le_disquaire','ines_aux','noah.du.crew','mila.en.live','yass_ecoute','camille.bside','alex.sans.skip','jade_404','ryan.onair','chloe.vinyle','nassim_prod','eva.bleu','theo.bpm','zoe.after','max_la_faceB','amina.radio','yanis.2h','lou.journal','momo.stereo'];
+function seeded(seed){let x=hash(seed);return()=>{x=(Math.imul(x,1664525)+1013904223)>>>0;return x/4294967296}}
+function choose(r,a){return a[Math.floor(r()*a.length)]}
+function ensureWorld(){
+ if(!G)return;
+ if(!Number.isInteger(G.artSeq))G.artSeq=0;
+ if(!Number.isInteger(G.playerArtNext))G.playerArtNext=(G.songs.length+G.albums.length)%ART_THEMES.length;
+ [...G.songs,...G.albums,...G.feed].forEach(assignArtwork);
+ const w=G.socialWorld;
+ if(!w||w.v!==1||!Array.isArray(w.posts)||!Array.isArray(w.following)||!w.affinity||!w.reposts)G.socialWorld={v:1,week:-1,posts:[],following:[],affinity:{},reposts:{},storyLikes:{}};
+ if(!G.socialWorld.storyLikes)G.socialWorld.storyLikes={};
+ if(G.socialWorld.week!==G.t){generateWorld();G.socialWorld.week=G.t}
+ [...G.posts,...G.videos].slice(0,30).forEach(p=>{if(!G.comments[p.id])G.comments[p.id]=generatedReplies(p)});
+}
+function tweetContext(a,r,index){
+ const releases=G.feed.filter(f=>f.artist===a.n),f=releases[0],record=f?.title||titleFor(a),up=2+Math.floor(r()*6),progress=[0,12,24,47,63,82,99][Math.floor(r()*7)];
+ const catalog=G.songs.filter(s=>s.rel!=null),mine=catalog[catalog.length-1];
+ const options=[
+ {type:'progress',topic:'album',record,text:`Prochain album : ${progress} %. ${progress===0?'J’ai le titre, la pochette… et aucun morceau. On avance 😭':progress<50?'J’ai supprimé trois morceaux pour en garder un seul. Vous me connaissez.':'Le mix du dernier titre me rend fou. Mais on y est presque.'}`},
+ {type:'announce',topic:'album',record,text:`« ${record} ». L’album dans ${up} semaines. ${10+Math.floor(r()*8)} titres, ${Math.floor(r()*4)} invités. Je vous montre la tracklist ou la pochette d’abord ?`},
+ {type:'release',topic:'single',record,text:f?`« ${record} » est dehors. ${f.kind==='clip'?'Le clip aussi. Ne ratez pas la scène après le générique.':'Écoutez la transition au casque, c’est le détail qui change tout.'} Vous avez déjà un passage préféré ?`:`Je garde « ${record} » depuis des mois. Vendredi à minuit il sera à vous. Pas de teaser de plus : vous aurez le morceau entier.`},
+ {type:'delay',topic:'album',record,text:`Petite vérité : « ${record} » ne sortira pas vendredi. Le sample n’est toujours pas validé. Je préfère décaler que retirer le meilleur passage. Vous méritez l’explication.`},
+ {type:'tour',topic:'concert',record,text:`La date à ${choose(r,['Paris','Lyon','Marseille','Bruxelles','Montréal','Lille'])} est complète. J’ai négocié 80 places de plus, elles ouvrent demain à 18 h. Pas besoin de payer trois fois le prix aux revendeurs.`},
+ {type:'studio',topic:'studio',record,text:`6 h 12. On a changé la batterie de « ${record} » et c’est devenu un autre morceau. La version triste ou la version qui cogne ?`},
+ {type:'debate',topic:'débat',record,text:choose(r,['Question sérieuse : 9 titres sans aucun skip ou 24 avec des pépites cachées ?','Vous regardez encore les clips en entier ou tout passe par les extraits de quinze secondes ?','Le feat doit surprendre ou ressembler au reste du projet ? Je me bats avec cette question.','Les intros de plus d’une minute : ambiance incroyable ou bouton skip immédiat ?'])},
+ {type:'life',topic:'quotidien',record,text:choose(r,['Mon voisin m’a demandé de baisser les basses. C’est lui qui avait choisi l’instru hier soir.','J’ai croisé quelqu’un qui portait mon merch et j’ai pas osé lui parler. Très professionnel de ma part.','Le disque dur du studio s’appelle « FINAL_FINAL_VRAI_FINAL ». Ça résume assez bien ma semaine.','Mon ingé son vient de me dire « encore une prise » avec le même regard depuis deux heures.','J’ai envoyé la mauvaise version à mon propre manager. Il l’a préférée. Je ne sais pas comment le prendre.'])},
+ {type:'tease',topic:'single',record,text:`J’ai fait écouter « ${record} » à trois personnes. Trois avis opposés. Je le poste sans demander à une quatrième ou quoi ?`},
+ {type:'milestone',topic:'single',record,text:`${Math.floor(a.ml*100000).toLocaleString('fr-FR')} écoutes simulées pour « ${record} ». Ce n’était même pas le morceau que le label voulait sortir. Gardez confiance dans vos choix.`},
+ ];
+ if(mine&&index%6===0)return {type:'discovery',topic:'single',record:mine.title,text:`Je viens de tomber sur « ${mine.title} » de ${G.name}. ${mine.q>=65?'Il y a une vraie direction, surtout sur le refrain.':'C’est encore brut, mais il y a quelque chose à creuser.'} Vous connaissez ?`};
+ return options[index%options.length];
+}
+function generateWorld(){
+ const w=G.socialWorld,r=seeded(G.name+'|social|'+G.t),posts=[];
+ const artists=ARTISTS.filter(a=>a.fr||a.g===G.genre),seen=new Set();
+ for(let i=0;i<24;i++){
+ let a=choose(r,artists);let tries=0;while(seen.has(a.n)&&tries++<20)a=choose(r,artists);seen.add(a.n);
+ const ctx=tweetContext(a,r,i),net=i<18?'x':'ig',id=`world-${G.t}-${i}`,reach=Math.round(a.ml*10000*(.2+r())),likes=Math.round(reach*(.025+r()*.08));
+ const p={id,artist:a.n,bot:true,net,kind:net==='x'?'tweet':'photo',t:G.t,text:ctx.text,record:ctx.record,type:ctx.type,topic:ctx.topic,genre:a.g,likes,tot:reach,q:50+Math.floor(r()*45),slot:24-i};
+ if(net==='ig'||['announce','release'].includes(p.type)&&i%2===0)p.img=artwork(i%ART_THEMES.length,a.n+'|'+ctx.record,ctx.record);
+ posts.push(p);G.comments[id]=generatedReplies(p);
+ }
+ w.posts=[...posts,...w.posts.filter(p=>G.t-p.t<=2)].slice(0,66);
+ const valid=new Set([...w.posts,...G.posts,...G.videos].map(p=>p.id));
+ for(const key of Object.keys(G.comments))if(key.startsWith('world-')&&!valid.has(key))delete G.comments[key];
+ for(const key of Object.keys(G.reactions))if(key.startsWith('world-')&&!valid.has(key))delete G.reactions[key];
+ for(const key of Object.keys(w.reposts))if(!valid.has(key))delete w.reposts[key];
+ w.storyLikes={};
+}
+function generatedReplies(p){
+ const r=seeded(p.id+'|replies'),title=p.record||G.songs.find(s=>p.text?.toLowerCase().includes(s.title.toLowerCase()))?.title||'ce morceau';
+ const type=p.type||(p.text?.includes('0 %')||p.text?.includes('0%')?'progress':/album|tracklist/i.test(p.text)?'announce':/concert|tournée|salle/i.test(p.text)?'tour':'own');
+ const specific={
+ progress:[/0\s*%/.test(p.text)?`0 % de musique, 100 % de teasing. On connaît 😭`:`À ce rythme on va suivre chaque pourcentage de l’album 😂`,`Tant que tu prends le temps, ça me va. Je préfère attendre un vrai projet.`,`Le dossier « album final » doit être bien vide mdrr.`,`Tu produis tout toi-même cette fois ou tu bosses avec une équipe ?`,`Montre une démo, même pas mixée, on veut suivre la création.`],
+ announce:[`J’ai bloqué mon vendredi pour « ${title} ».`,`Dis-nous juste qui est sur la piste 7 👀`,`Encore un album annoncé sans un extrait ? Fais écouter avant de faire le mystérieux.`,`Version vinyle prévue ou uniquement streaming ?`,`La pochette a déjà gagné, maintenant il faut les sons qui vont avec.`],
+ delay:[`Merci d’expliquer le retard. Ça change des artistes qui font disparaître la date.`,`Le sample pas validé à deux jours de la sortie ? Votre équipe fait quoi sérieux ?`,`Je garde ma précommande. Prends le temps de faire ça proprement.`,`Tu peux sortir une version sans le sample en attendant ?`],
+ release:[`Le deuxième couplet de « ${title} », j’ai dû revenir en arrière.`,`Le mix est à chier sur mes écouteurs, la voix disparaît derrière la basse.`,`Ça fait trois fois que je relance le refrain. Pas prévu de dormir.`,`Quelqu’un a les paroles de « ${title} » ?`,`Beaucoup de bruit pour un morceau aussi oubliable…`,`Le pont à la fin mérite un morceau à lui tout seul.`],
+ studio:[`Garde les deux versions sur la deluxe, on réglera ça nous-mêmes.`,`La version qui cogne pour la salle, la triste pour les retours de soirée.`,`Ton ingé son mérite une semaine de vacances après ça.`,`Arrête de retoucher « ${title} », tu vas finir par enlever le meilleur passage.`],
+ tour:[`J’y étais la dernière fois, le public connaissait même les adlibs.`,`On attend toujours une date à Toulouse, on existe aussi 😭`,`80 places pour un refresh de 12 000 personnes, ça va être la guerre.`,`J’espère que le son de la salle sera meilleur que la dernière fois.`,`Est-ce que la fosse sera accessible aux mineurs accompagnés ?`],
+ debate:[`Neuf titres. Aucun interlude qui sert juste à faire du chiffre.`,`Si le projet raconte quelque chose, la durée m’importe peu.`,`Encore ce débat alors que vous skippez tous au bout de huit secondes mdrr.`,`Un bon clip me fait redécouvrir un morceau que j’avais oublié.`],
+ life:[`On veut un documentaire sur ton ingé son plutôt que l’album.`,`Le manager a sûrement raison, tu sur-réfléchis trop 😂`,`Franchement ce genre de coulisses c’est mieux que vos communiqués de presse.`,`Ça tweete beaucoup ici, ça enregistre quand ?`],
+ discovery:[`Je connaissais pas ${G.name}, j’ajoute « ${title} » à ma playlist.`,`Il y a du potentiel mais le mix manque encore de place.`,`C’est ton pote ? Parce que ce refrain est éclaté au sol.`,`Belle découverte, merci de mettre en avant les petits artistes.`],
+ own:[`Je viens de tomber sur ton compte. Tu fais quel style ?`,`Le travail commence à payer, continue même si ça monte lentement.`,`Frérot tu fais la promo plus fort que la musique pour l’instant.`,`On veut un extrait sans filtre, juste la voix et l’instru.`,`Je serai là à la sortie, garde ton univers.`,`Beaucoup d’assurance pour quelqu’un qu’on n’a jamais écouté 💀`,`On pourra écouter ça où ?`,`La direction artistique me plaît, curieux d’entendre la suite.`],
+ milestone:[`« ${title} » méritait sa chance dès le départ.`,`Les chiffres c’est bien, mais j’attends surtout un meilleur deuxième couplet.`,`Ça tourne chez moi depuis la sortie. Vous allez trop vite !`],
+ tease:[`Poste. Le pire qui puisse arriver c’est qu’on soit honnêtes.`,`On a eu assez d’extraits, maintenant on veut le titre entier.`,`Si « ${title} » ressemble au dernier, garde-le au chaud hein.`,`La démo va finir par devenir notre version préférée.`]
+ };
+ const lines=specific[type]||specific.own;
+ const count=p.bot?3+Math.floor(r()*3):Math.min(7,Math.max(1,Math.floor((p.tot||0)/100)+2));
+ const used=new Set(),out=[];
+ for(let i=0;i<Math.min(count,lines.length);i++){
+ let text=lines[(i+Math.floor(r()*lines.length))%lines.length];if(used.has(text))text=lines.find(x=>!used.has(x))||`Je reviens après une vraie écoute au casque. #${G.genre}`;
+ used.add(text);const author=HANDLES[(hash(p.id)+i*7)%HANDLES.length];
+ out.push({id:`reply-${p.id}-${i}`,author,text,bot:true,t:G.t,likes:Math.floor(r()*180)});
+ }return out;
+}
+function socialScore(p){
+ const w=G.socialWorld,author=p.artist||G.name,age=G.t-p.t,own=!p.bot;
+ return (own?20:0)+(w.reposts[p.id]?8:0)+Math.max(-30,40-age*19)+(w.following.includes(author)?34:0)+(p.genre===G.genre?16:0)+Math.min(16,w.affinity[author]||0)+Math.min(12,Math.log10(1+(p.likes||0))*2)+(hash(p.id)%100)/20;
+}
+function timelinePosts(){
+ const pool=[...G.socialWorld.posts,...G.posts,...G.videos].filter(p=>p.net===netView);
+ return pool.filter(p=>timelineMode!=='following'||!p.bot||G.socialWorld.following.includes(p.artist)||G.socialWorld.reposts[p.id]).sort(timelineMode==='recent'?(a,b)=>b.t-a.t+(b.slot||0)/100-(a.slot||0)/100:(a,b)=>socialScore(b)-socialScore(a)).slice(0,24);
+}
+function socialPostCard(p){
+ const author=p.bot?p.artist:G.name,net=NETS.find(n=>n.id===p.net),liked=!!G.reactions[p.id],reposted=!!G.socialWorld.reposts[p.id],replies=G.comments[p.id]||[];
+ return `<article class="card social-card" data-post="${esc(p.id)}">${reposted?'<p class="hint">⇄ Republié par toi</p>':''}<div class="row">${portrait(author,40)}<div class="grow"><b>${esc(author)}</b>${p.bot?'<span class="sim-verify">✦</span>':''}<div class="hint">${net.n} · ${ago(p.t)}${p.bot?' · fictif':''}</div></div>${p.bot?`<button class="follow-btn ${G.socialWorld.following.includes(author)?'active':''}" data-a="sFollow" data-v="${esc(author)}">${G.socialWorld.following.includes(author)?'Suivi':'Suivre'}</button>`:'<span class="pill">Toi</span>'}</div><p class="tweet-text">${esc(p.text)}</p>${p.img?`<button class="social-image" data-a="artZoom" data-v="${esc(p.id)}" aria-label="Agrandir l’illustration"><img src="${esc(p.img)}" loading="lazy" decoding="async" alt="Illustration du post de ${esc(author)}"></button>`:''}<div class="tweet-actions"><button data-a="sLike" data-v="${esc(p.id)}" class="${liked?'liked':''}" aria-label="J’aime" aria-pressed="${liked}">♡ <span>${fmt((p.likes||0)+(liked?1:0))}</span></button><button data-a="sThread" data-v="${esc(p.id)}" aria-label="Lire les réponses">↳ <span>${replies.length}</span></button><button data-a="sRepost" data-v="${esc(p.id)}" class="${reposted?'reposted':''}" aria-label="Republier" aria-pressed="${reposted}">⇄ <span>${fmt((p.bot?hash(p.id)%450:0)+(reposted?1:0))}</span></button><span class="hint">◉ ${fmt(p.tot||0)}</span></div>${replies.slice(0,2).map(c=>`<div class="reply-preview"><b>@${esc(c.author)}</b> ${esc(c.text)}</div>`).join('')}<button class="link see-thread" data-a="sThread" data-v="${esc(p.id)}">Lire la conversation →</button></article>`;
+}
+const priorSocial=vSocial;
+vSocial=function(){
+ ensureWorld();if(sub.social==='stats')return priorSocial();
+ const posts=timelinePosts(),own=G.stories.length;
+ return `${lt('Réseaux','Le game en direct')}${seg([['feed','Feed'],['stats','Stats']])}<section class="card"><div class="stories"><button class="story" data-a="${own?'myStory':'post'}" data-v="${own?'':'ig:story'}"><span class="ring ${own?'':'seen'}">${portrait(G.name,56)}<span class="add">+</span></span>Ta story</button>${G.storyArtists.map(n=>`<button class="story" data-a="story" data-v="${esc(n)}"><span class="ring ${G.seen[n]?'seen':''}">${portrait(n,56)}</span><span class="ell" style="width:68px">${esc(n)}</span></button>`).join('')}</div></section><div class="chips network-picker">${[['x','𝕏 Twitter'],['ig','◎ Instagram'],['yt','▷ YouTube']].map(([n,l])=>`<button class="${netView===n?'on':''}" data-a="sNet" data-v="${n}">${l}</button>`).join('')}</div><button class="quick-compose card" data-a="post" data-v="${netView}:${netView==='x'?'tweet':netView==='ig'?'photo':'vlog'}">${portrait(G.name,36)}<span>${netView==='x'?'Quoi de neuf dans ta carrière ?':netView==='ig'?'Partage un moment, une image…':'Prépare ta prochaine vidéo…'}</span><b>＋</b></button><div class="chips feed-modes">${[['foryou','Pour toi'],['following','Abonnements'],['recent','Récents']].map(([n,l])=>`<button class="${timelineMode===n?'on':''}" data-a="sMode" data-v="${n}">${l}</button>`).join('')}</div><p class="social-notice">SIMULATION · publications et réactions inventées.<button class="link" data-a="sAlgorithm">Pourquoi ces posts ?</button></p>${posts.length?posts.map(socialPostCard).join(''):`<section class="card"><p>Pas encore de contenu ici.</p><p class="hint">${timelineMode==='following'?'Suis des artistes depuis « Pour toi » pour retrouver leurs posts.':'Publie ton premier contenu pour lancer la conversation.'}</p></section>`}`;
+};
+function findSocialPost(id){return [...G.posts,...G.videos,...G.socialWorld.posts].find(p=>p.id===id)}
+function conversationSheet(id){
+ const p=findSocialPost(id);if(!p)return '<h2>Publication indisponible</h2>';
+ const replies=G.comments[id]||[],author=p.bot?p.artist:G.name;
+ return `<h2>La conversation</h2><div class="row">${portrait(author,42)}<b>${esc(author)}</b><span class="hint">${p.bot?'Publication fictive':'Ton post'}</span></div><p class="thread-original">${esc(p.text)}</p>${p.img?`<img class="thread-media" src="${esc(p.img)}" alt="Illustration du post">`:''}<p class="hint">${replies.length} réponses · les comptes internautes sont simulés.</p><div class="thread-replies">${replies.map(c=>`<div class="thread-reply">${portrait(c.author,30)}<div class="grow"><b>@${esc(c.author)}</b><p>${esc(c.text)}</p><small class="dim">${c.bot?'Internaute simulé':'Toi'} · ♡ ${fmt(c.likes||0)}</small></div></div>`).join('')}</div><label class="f">Ta réponse<textarea id="replyText" maxlength="240" placeholder="Rejoins la conversation…"></textarea></label><button class="btn pri" data-a="sReply" data-v="${esc(id)}">Répondre</button>`;
+}
+A.sNet=n=>{netView=n;render(true)};A.sMode=n=>{timelineMode=n;render(true)};
+A.sAlgorithm=()=>openSheet(()=>`<h2>Un fil qui te ressemble</h2><p>Le fil « Pour toi » prend en compte la fraîcheur du post, ton style ${esc(G.genre)}, les artistes que tu suis et tes interactions.</p><p>Les likes et les réponses renforcent l’affinité avec un artiste. « Abonnements » affiche les artistes suivis et tes propres posts. « Récents » suit l’ordre des semaines.</p><p class="hint">Chaque semaine apporte de nouvelles discussions. Les annonces, ventes et propos attribués aux artistes sont entièrement fictifs.</p>`);
+A.sFollow=n=>{const f=G.socialWorld.following,i=f.indexOf(n);if(i>=0)f.splice(i,1);else f.push(n);ok()};
+A.sLike=id=>{const p=findSocialPost(id);if(!p)return;const was=!!G.reactions[id];G.reactions[id]=!was;const a=p.artist||G.name;G.socialWorld.affinity[a]=clamp((G.socialWorld.affinity[a]||0)+(was?-3:3),0,24);ok()};
+A.sRepost=id=>{const p=findSocialPost(id);if(!p)return;G.socialWorld.reposts[id]=!G.socialWorld.reposts[id];ok();toast(G.socialWorld.reposts[id]?'Ajouté à tes republications.':'Republication retirée.')};
+A.sThread=id=>openSheet(()=>conversationSheet(id));
+A.sReply=id=>{
+ const text=($('#replyText')?.value||'').trim();if(!text)return toast('Écris une réponse.');const p=findSocialPost(id);if(!p)return;
+ const replies=G.comments[id]||(G.comments[id]=[]);replies.push({id:'you-'+Date.now(),author:G.name,text:text.slice(0,240),bot:false,t:G.t,likes:0});
+ const r=seeded(id+text),ack=choose(r,[`@${G.name} t’as un point, je vais réécouter ça au calme.`,`@${G.name} on n’a pas la même oreille mais au moins tu développes.`,`@${G.name} voilà le genre d’échange qui manque sous les posts.`,`@${G.name} tu peux nous faire écouter tes propres sons ? Je suis curieux.`]);
+ if(replies.length<45)replies.push({id:'answer-'+Date.now(),author:choose(r,HANDLES),text:ack,bot:true,t:G.t,likes:1});
+ G.comments[id]=replies.slice(-45);const a=p.artist||G.name;G.socialWorld.affinity[a]=clamp((G.socialWorld.affinity[a]||0)+5,0,24);save();render(true);reSheet();
+};
+A.artZoom=id=>{const p=findSocialPost(id);if(p?.img)openSheet(()=>`<h2>Illustration</h2><img src="${esc(p.img)}" alt="Illustration du post" style="width:100%;border-radius:18px"><p class="hint">Création originale intégrée au jeu.</p>`)};
+// Suggested tweets follow the player's real releases, plans and current circumstances.
+function suggestedTweet(kind){
+ const out=released(),latest=out[out.length-1],planned=G.songs.find(s=>s.rel>G.t);
+ if(kind==='progress')return `Mon prochain album : 0 %. Le nom est prêt, la pochette aussi. Maintenant il reste juste… la musique.`;
+ if(kind==='release')return planned?`« ${planned.title} » arrive dans ${planned.rel-G.t} semaine(s). Je vous montre un extrait ce soir ?`:latest?`« ${latest.title} » est sorti. ${fmt(latest.total)} écoutes et je relis chaque retour. Vous gardez quel passage ?`:`Mon premier morceau se prépare. J’ai pas encore de date, mais je veux vous montrer la création depuis le début.`;
+ if(kind==='life')return G.energy<25?`Plus d’énergie, trop d’idées. Je ferme la session avant de détester un morceau que j’adorais il y a une heure.`:`J’ai réécouté la même boucle pendant deux heures. L’ingé son me dit qu’elle est terminée. Vous connaissez ce doute avant de sortir un son ?`;
+ return '';
+}
+const previousNewPost=newPost;
+newPost=function(net,kind){
+ previousNewPost(net,kind);draftP.artTheme=(G.artSeq||0)%ART_THEMES.length;draftP.artSeed=G.name+'|post|'+G.t+'|'+G.nid;draftP.autoArt=true;
+ draftP.text=net==='x'?'':kind==='story'?suggestedTweet('life'):net==='ig'?`Un instant entre deux sessions. ${G.genre}, les proches et la suite qui se prépare.`:draftP.text;
+ draftP.img=net==='x'?null:artwork(draftP.artTheme,draftP.artSeed,'');
+};
+sheetPost=function(){
+ const d=draftP,K=KINDS[d.net][d.kind],est=Math.round(G.social[d.net]*K.r*.7+30);
+ return `<h2>${d.net==='x'?'Écrire un tweet':K.n+' '+NETS.find(n=>n.id===d.net).n}</h2>${chipsRow('Réseau',NETS.map(n=>[n.id,n.n,d.net===n.id]),'pn')}${chipsRow('Format',Object.entries(KINDS[d.net]).map(([k,x])=>[k,`${x.n} · ${x.e} én.`,d.kind===k]),'pk')}<label class="f">${d.net==='yt'?'Titre de la vidéo':'Texte'}<textarea id="pText" maxlength="240" placeholder="Ton annonce, ton avis, ton quotidien…">${esc(d.text)}</textarea></label>${d.net==='x'?'<div class="chips"><button data-a="sSuggest" data-v="progress">Album 0 %</button><button data-a="sSuggest" data-v="release">Une sortie</button><button data-a="sSuggest" data-v="life">Les coulisses</button></div>':''}<p class="hint">Illustration ${d.img?'incluse':'facultative'} · change l’ambiance ou importe ta propre image.</p><div class="art-options">${ART_THEMES.map((n,i)=>`<button data-a="pArt" data-v="${i}" class="${d.img&&d.artTheme===i?'on':''}"><img src="${esc(artwork(i,d.artSeed,''))}" alt=""><span>${n}</span></button>`).join('')}</div>${d.img?`<div class="post-preview ${d.kind==='story'?'story-preview':''}"><img src="${esc(d.img)}" alt="Illustration sélectionnée"><p>${esc(d.text)}</p></div><button class="link" data-a="pNoArt">Retirer l’image</button>`:''}<label class="f">Importer une image<input type="file" accept="image/*" data-a="pImg"></label><div class="hint">Portée estimée : ${fmt(est)} · énergie ${K.e} · 240 caractères max.</div><button class="btn pri" data-a="postgo" ${G.energy<K.e?'disabled':''}>Publier</button>`;
+};
+A.pArt=v=>{draftP.artTheme=+v;draftP.img=artwork(+v,draftP.artSeed,'');draftP.autoArt=true;reSheet()};
+A.pNoArt=()=>{draftP.img=null;draftP.autoArt=false;reSheet()};
+A.sSuggest=k=>{draftP.text=suggestedTweet(k);reSheet()};
+A.postgo=()=>{
+ const d=draftP,K=KINDS[d.net][d.kind];d.text=($('#pText')?.value??d.text).trim();
+ if(!d.text&&!d.img)return toast('Écris un texte ou choisis une image.');
+ if(!useE(K.e))return;const r=doPost(d.net,d.kind,d.text.slice(0,240),d.img);netView=d.net;closeSheet();ok();toast(`${K.n} publié : ${fmt(r.reach)} de portée, ${r.gn>=0?'+':''}${fmt(r.gn)} abonnés`);
+};
+const oldDoPost=doPost;
+doPost=function(net,kind,text,img){
+ const r=oldDoPost(net,kind,text,img);
+ const p=kind==='story'?G.stories[G.stories.length-1]:net==='yt'?G.videos[0]:G.posts[0];
+ if(kind!=='story'){
+ p.type=/0\s*%/.test(text)?'progress':/album|tracklist/i.test(text)?'announce':/concert|tournée/i.test(text)?'tour':'own';
+ p.genre=G.genre;G.comments[p.id]=generatedReplies(p);
+ // A relevant announcement can lift hype once per song per week.
+ const s=G.songs.find(s=>s.rel!=null&&text.toLowerCase().includes(s.title.toLowerCase()));
+ if(s&&s.socialBoostWeek!==G.t){s.hype=Math.min(3,s.hype+.03+Math.min(.12,r.reach/Math.max(1000,G.fans)*.05));s.socialBoostWeek=G.t}
+ }
+ return r;
+};
+A.story=n=>{
+ const h=hash(n+'|'+G.t),a=AMAP.get(n),recent=G.feed.find(f=>f.artist===n),record=recent?.title||'Carnet de nuit';
+ G.seen[n]=1;render(true);
+ const stories=[{text:recent?`« ${record} » est dehors. La scène du clip qu’on a tournée à 4 h du matin…`:`Album en préparation. Aujourd’hui on garde la démo, pas la prise parfaite.`,theme:7,label:recent?record:'APRÈS MINUIT'}, {text:`${a?.g||'Musique'}, deux cafés et un trajet sans fin. Prochain arrêt : ${['Paris','Lyon','Bruxelles','Marseille'][h%4]}.`,theme:1,label:'ON THE ROAD'}, {text:`Le calme avant le prochain chapitre. Vous préférez une annonce surprise ou une date longtemps à l’avance ?`,theme:2,label:'ENTRE DEUX MONDES'}];
+ openSV(stories.map((s,i)=>({name:n,sub:`il y a ${1+(h+i*3)%18} h · fiction`,text:s.text,img:artwork(s.theme,n+'|story|'+G.t+'|'+i,s.label),bg:STORY_BG[(h+i)%STORY_BG.length],foot:i===2?'Question de la communauté':''})));
+};
+A.myStory=()=>openSV(G.stories.map(s=>({name:G.name,sub:'Ta story',text:s.text,img:s.img||artwork(hash(s.id)%ART_THEMES.length,s.id,''),bg:STORY_BG[hash(s.id)%STORY_BG.length],foot:`${fmt(s.views)} vues · ${fmt(s.replies)} réponses simulées`}))) ;
+// Art choices are lightweight metadata. Uploaded images still take precedence.
+function artControls(o,action,value=''){
+ const theme=Number.isInteger(o.artTheme)?o.artTheme:hash(o.title||'')%ART_THEMES.length;
+ return `<div class="cover-editor"><div class="row">${cover(o,96)}<div class="grow"><b>${ART_THEMES[theme]}</b><p class="hint">Pochette originale · varie le thème en un geste.</p></div></div><div class="chips">${ART_THEMES.map((n,i)=>`<button class="${!o.cover&&theme===i?'on':''}" data-a="${action}" data-v="${value?value+':':''}${i}">${n}</button>`).join('')}</div></div>`;
+}
+const oldSheetSong=sheetSong;
+sheetSong=function(){if(!Number.isInteger(draftS.artTheme))draftS.artTheme=G.playerArtNext%ART_THEMES.length;return oldSheetSong().replace('<label class="f">Titre',artControls(draftS,'draftSongArt')+'<label class="f">Titre').replace(/(<button[^>]*data-a="sf_"[^>]*>)([^<]*)<\/button>/g,(all,start,text)=>{const index=Number(start.match(/data-v="(-?\d+)"/)?.[1]);return index>=0&&G.feats[index]?start+portrait(G.feats[index].name,26)+'<span>'+text+'</span></button>':all})};
+A.draftSongArt=v=>{draftS.artTheme=+v;reSheet()};
+const oldMakeSong=A.makesong;
+A.makesong=()=>{const count=G.songs.length;oldMakeSong();if(G.songs.length>count){const s=G.songs[G.songs.length-1];s.artTheme=draftS.artTheme;assignArtwork(s);G.playerArtNext=(s.artTheme+1)%ART_THEMES.length;save();render(true)}};
+const oldRel=sheetRel;
+sheetRel=function(){const s=G.songs.find(s=>s.id===draftR.id);return oldRel().replace('<label class="f">Pochette',artControls(s,'songArt',String(s.id))+'<label class="f">Pochette')};
+const oldSongInfo=sheetSongInfo;
+sheetSongInfo=function(id){const s=G.songs.find(s=>s.id===id);return oldSongInfo(id).replace('<label class="f">Changer la pochette',artControls(s,'songArt',String(id))+'<label class="f">Changer la pochette')};
+A.songArt=v=>{const[id,t]=v.split(':').map(Number),s=G.songs.find(s=>s.id===id);if(s){s.artTheme=t;s.cover=null;ok();reSheet()}};
+const oldSheetAlbum=sheetAlbum;
+sheetAlbum=function(){if(!Number.isInteger(draftA.artTheme))draftA.artTheme=G.playerArtNext%ART_THEMES.length;return oldSheetAlbum().replace('<label class="f">Titre',artControls(draftA,'draftAlbumArt')+'<label class="f">Titre')};
+A.draftAlbumArt=v=>{draftA.artTheme=+v;draftA.cover=null;reSheet()};
+const oldAlbumGo=A.albumgo;
+A.albumgo=()=>{if(draftA.ids.length<4||draftA.ids.length>16)return toast('Choisis entre 4 et 16 titres.');const count=G.albums.length;oldAlbumGo();if(G.albums.length>count){const a=G.albums[G.albums.length-1];a.artTheme=draftA.artTheme;assignArtwork(a);G.playerArtNext=(a.artTheme+1)%ART_THEMES.length;save();render(true)}};
+const oldAlbumInfo=sheetAlbumInfo;
+sheetAlbumInfo=function(id){const a=G.albums.find(a=>a.id===id);return oldAlbumInfo(id).replace('<label class="f">Changer la pochette',artControls(a,'albumArt',String(id))+'<label class="f">Changer la pochette')};
+A.albumArt=v=>{const[id,t]=v.split(':').map(Number),a=G.albums.find(a=>a.id===id);if(a){a.artTheme=t;a.cover=null;ok();reSheet()}};
+const baseSheetPlus=sheetPlus;
+sheetPlus=function(){return baseSheetPlus().replace('<h2>Créer</h2>','<h2>Créer</h2><button class="act" data-a="post" data-v="x:tweet"><span class="aico c4">𝕏</span><div><b>Écrire un tweet</b><small>Annonces, débats et réactions</small></div></button>')};
+const baseRender=render;
+render=function(keep){if(G){const weekBefore=G.socialWorld?.week,artBefore=G.artSeq;ensureWorld();if(weekBefore!==G.socialWorld.week||artBefore!==G.artSeq)save()}return baseRender(keep)};
+const baseValidate=validateSave;
+validateSave=function(g){baseValidate(g);if(g.socialWorld){const w=g.socialWorld;if(w.v!==1||!Array.isArray(w.posts)||!Array.isArray(w.following)||!w.affinity||!w.reposts||w.posts.length>90||w.posts.some(p=>typeof p.id!=='string'||typeof p.artist!=='string'||typeof p.text!=='string'||!['x','ig','yt'].includes(p.net)||!Number.isFinite(p.t)))throw Error('Fil social invalide.')}return g};
+
+const originalItemSheet=sheetItem;
+sheetItem=function(id){return originalItemSheet(id)+`<button class="btn" data-a="sThread" data-v="${esc(id)}">Voir les réponses des internautes</button>`};
+
 /* ============ Démarrage ============ */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.matches('input'))return;const f=A[t.dataset.a];if(!f)return;f(t.dataset.v,t);if(G&&t.dataset.a!=='next')save()});
 document.addEventListener('change',e=>{const t=e.target;if(t.matches('input[type=file]')){const f=A[t.dataset.a];if(f)f(t.files[0],t);t.value=''}});
 document.addEventListener('input',e=>{const t=e.target;if(t.id==='sTitle'&&draftS)draftS.title=t.value;else if(t.id==='pText'&&draftP)draftP.text=t.value;else if(t.id==='aTitle'&&draftA)draftA.title=t.value;else if(t.id==='wname')draft.name=t.value;else if(t.id==='dq'){dir.q=t.value;dir.n=30;dirList()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(sv)A.svx();else closeSheet()}});
-document.addEventListener('gesturestart',e=>e.preventDefault());
-document.addEventListener('dblclick',e=>e.preventDefault());
+
+
 $('#app').addEventListener('scroll',onScroll,{passive:true});
 try{G=load()}catch(e){G=null}
 render();
